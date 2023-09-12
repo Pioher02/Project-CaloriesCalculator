@@ -1,5 +1,5 @@
 {
-  "name": "react-homework-template",
+  "name": "Project-CaloriesCalculator",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://Pioher02.github.io/Project-CaloriesCalculator/",
@@ -10,6 +10,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
+    "styled-components": "^6.0.7",
     "web-vitals": "^2.1.3"
   },
   "scripts": {
