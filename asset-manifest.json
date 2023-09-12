@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Project-CaloriesCalculator/static/css/main.7acaea2f.css",
+    "main.js": "/Project-CaloriesCalculator/static/js/main.cd13b19d.js",
+    "index.html": "/Project-CaloriesCalculator/index.html",
+    "main.7acaea2f.css.map": "/Project-CaloriesCalculator/static/css/main.7acaea2f.css.map",
+    "main.cd13b19d.js.map": "/Project-CaloriesCalculator/static/js/main.cd13b19d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7acaea2f.css",
+    "static/js/main.cd13b19d.js"
+  ]
+}
