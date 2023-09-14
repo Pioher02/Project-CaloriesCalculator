@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import logo from "../images/logoSlimMom.png";
 
 const Header = styled.nav`
   width: 60%;
@@ -30,7 +31,7 @@ const NavBar = () => {
   return (
     <Header>
       <Navigationbar>
-        <img src="../../public/images/logo.png" alt="Logo" />
+        <img src={logo} alt="LogoSlimMom" />
         <Options>
           <NavLink
             to="/Project-CaloriesCalculator/diario"

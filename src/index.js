@@ -7,7 +7,6 @@ import { theme } from 'theme';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
 
-
 const container = document.getElementById('root');
 const root = createRoot(container);
 
