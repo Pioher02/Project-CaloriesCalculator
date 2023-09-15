@@ -86,21 +86,26 @@ li{
         line-height: 17px;
         letter-spacing: 0.04em;
         text-align: center;
+        
       }
       li:first-child {
       margin-top:-5px;
       width:162;
       height:44px;
+     
     }
     li:not(:first-child) {
       margin-top:-5px;
     }
       span{
         display:flex;
-        margin-left:850px;
-        margin-top:40px;
+        margin-left:80px;
+        margin-top:35px;
         gap:30px;
+        height:20px;
+        border-left: 2px solid grey;
     }
+   
   }
 `;
 export const StyledLogo = styled.div`
