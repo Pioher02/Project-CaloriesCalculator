@@ -8,6 +8,7 @@ import { PrivateRoute } from 'components/PrivateRoute';
 import { GlobalStyle } from 'components/GlobalStyle';
 import { Layout } from 'components/Layout/Layout';
 import { routes } from 'helpers/constants';
+import DiaryPage from 'pages/Diary';
 
 const MainPage = lazy(() => import('pages/MainPage/MainPage'));
 const CalculatorPage = lazy(() =>
@@ -31,6 +32,7 @@ export const App = () => {
       <GlobalStyle />
       <Routes>
         <Route path={routes.main} element={<Layout />}>
+        <Route path="/Project-CaloriesCalculator/diario" element={<DiaryPage />}></Route>
           <Route
             path={routes.main}
             element={
