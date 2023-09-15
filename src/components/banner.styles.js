@@ -27,11 +27,16 @@ li{
   span{
     display:flex;
     justify-content: flex-end;
-    margin-top:0px;
+    margin-top:30px;
   }
   li:first-child {
-    display:flex;
-    justify-content: flex-start;
+    
+    margin-left:20px;
+    margin-top:-30px;
+
+  }
+  li:not(:first-child) {
+    margin-top:-30px;
   }
 }
 @media (min-width: 768px) and (max-width: 1279px) {
