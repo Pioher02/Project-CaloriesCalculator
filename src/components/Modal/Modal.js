@@ -12,7 +12,7 @@ import {
   FoodListStyled,
   LinkStyled,
   ButtonStyled,
-} from './DailyCalorieIntake.styled';
+} from './Modal.styled';
 
 export const DailyCalorieIntake = ({
   dataForModal: { countedCalories, notAllowedFoodCategories },
