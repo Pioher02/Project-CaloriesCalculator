@@ -200,4 +200,6 @@ export const StartLosingWeightButton = styled.button`
     height: 30px;
     font-size: 10px;
   }
+
 `;
+
