@@ -17,10 +17,16 @@ export const LogoContainer = styled.div`
 export const LogoIcon = styled.img`
   width: 47px;
   height: 44px;
+  margin-right: 35px;
+
+  @media screen and (min-width: 768px) {
+    margin-right: -1px;
+  }
 
   @media screen and (min-width: 1280px) {
     width: 70px;
     height: 66px;
+    margin-right: 0;
   }
 `;
 
