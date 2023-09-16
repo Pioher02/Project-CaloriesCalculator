@@ -4,7 +4,6 @@ import { SideBar } from 'components/SideBar/SideBar';
 import { ModalDailyCalorie } from 'components/ModalDailyCalorie';
 import { DailyCalorieIntake } from 'components/Modal/CustomModal';
 
-
 import { WrapForm, WrapSideBar, WrapPage } from './CalculatorPage.styled';
 
 const CalculatorPage = () => {

@@ -91,7 +91,7 @@ export const DailyCaloriesForm = ({ openModal }) => {
         <ColumnWrap>
           <Column>
             <Label>
-              Altura *
+              Altura, cm *
               <InputForm
                 value={heightValue}
                 type="number"
@@ -129,7 +129,7 @@ export const DailyCaloriesForm = ({ openModal }) => {
               {errors?.age && <Error>{errors?.age?.message}</Error>}
             </Label>
             <Label>
-              Peso actual *
+              Peso actual, kg *
               <InputForm
                 value={currentWeightValue}
                 type="number"
@@ -153,7 +153,7 @@ export const DailyCaloriesForm = ({ openModal }) => {
 
           <Column>
             <Label>
-              Peso deseado *
+              Peso deseado, kg *
               <InputForm
                 value={desiredWeightValue}
                 type="number"

@@ -8,17 +8,21 @@ import { PrivateRoute } from 'components/PrivateRoute';
 import { GlobalStyle } from 'components/GlobalStyle';
 import { Layout } from 'components/Layout/Layout';
 import { routes } from 'helpers/constants';
+import DiaryPage from 'pages/DiaryPage/Diary';
 
-const MainPage = lazy(() => import('pages/MainPage/MainPage'));
+const MainPage = lazy(() => import('../pages/MainPage/MainPage'));
 const CalculatorPage = lazy(() =>
-  import('pages/CalculatorPage/CalculatorPage')
+  import('../pages/CalculatorPage/CalculatorPage')
 );
+
+const SignupPage = lazy(() => import('../pages/SignupPage/SignupPage'));
+const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 
 export const App = () => {
   const dispatch = useDispatch();
   const { calorie } = useSelector(selectUser);
   const { isRefreshing } = useSelector(selectIsRefreshing);
-  const noFormDataDirect = !calorie ? routes.calculate : routes.diaryToday;
+  const noFormDataDirect = !calorie ? routes.calculate : routes.diary;
 
   useEffect(() => {
     dispatch(refreshUser());
@@ -40,6 +44,24 @@ export const App = () => {
               />
             }
           />
+
+          <Route
+            path={routes.signup}
+            element={
+              <RestrictedRoute
+                component={<SignupPage />}
+                redirectTo="/signup"
+              />
+            }
+          />
+
+          <Route
+            path={routes.login}
+            element={
+              <RestrictedRoute component={<LoginPage />} redirectTo="/login" />
+            }
+          />
+
           <Route
             path={routes.calculate}
             element={
@@ -50,6 +72,15 @@ export const App = () => {
             }
           />
         </Route>
+        <Route
+          path={routes.diary}
+          element={
+            <RestrictedRoute //PrivateRoute
+              redirectTo={routes.main}
+              component={<DiaryPage />}
+            />
+          }
+        ></Route>
 
         <Route path="*" element={<Navigate to={routes.main} replace />}></Route>
       </Routes>

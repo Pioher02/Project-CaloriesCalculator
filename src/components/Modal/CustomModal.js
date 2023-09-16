@@ -72,5 +72,3 @@ export const DailyCalorieIntake = ({
 
 export default DailyCalorieIntake;
 
-
-

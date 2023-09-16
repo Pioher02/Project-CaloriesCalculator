@@ -55,3 +55,4 @@ export const productListSlice = createSlice({
 });
 
 export const { removeItem, getList, postInfo } = productListSlice.actions;
+export const productListReducer = productListSlice.reducer;
