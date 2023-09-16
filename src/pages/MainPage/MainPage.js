@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { DailyCaloriesForm } from 'components/DailyCaloriesForm';
 import { ModalDailyCalorie } from 'components/ModalDailyCalorie';
-import { DailyCalorieIntake } from 'components/Modal/Modal';
+import { DailyCalorieIntake } from 'components/Modal/CustomModal';
 import { Wrap } from './MainPage.styled';
 import { Container } from 'components/Container.styled';
 

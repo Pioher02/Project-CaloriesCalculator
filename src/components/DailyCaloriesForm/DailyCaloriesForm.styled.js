@@ -76,6 +76,13 @@ export const RadiobuttonLabel = styled.label`
   position: relative;
   display: flex;
   margin-right: ${p => p.theme.spaceForm[1]}px;
+  accent-color: ${p => p.theme.colors.accent};
+  border-color: white;
+
+  &:hover {
+    color: ${p => p.theme.colors.accent};
+    font-weight: bold;
+  }
 `;
 
 export const BloodTypeValue = styled.p`
@@ -96,6 +103,10 @@ export const RadiobuttonWrapper = styled.div`
   margin-bottom: ${p => p.theme.spaceForm[2]}px;
   padding-top: ${p => p.theme.spaceForm[0]}px;
   border-top: 1px solid ${p => p.theme.colors.input};
+
+  &:hover {
+    border-top: 3px solid ${p => p.theme.colors.accent};
+  }
 `;
 
 export const InputForm = styled.input`
@@ -110,6 +121,10 @@ export const InputForm = styled.input`
   font-size: ${p => p.theme.fontSizes.xs};
   letter-spacing: 0.04em;
   line-height: 1.21;
+
+  &:focus {
+    border-bottom: 3px solid ${p => p.theme.colors.accent};
+  }
 `;
 
 export const ButtonWrap = styled.div`
