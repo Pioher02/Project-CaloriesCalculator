@@ -5,7 +5,6 @@ import { productListReducer } from 'redux/products/slice';
 import { dateReducer } from 'redux/date/slice';
 import { diaryReducer } from 'redux/diary/slice';
 
-
 export const store = configureStore({
   reducer: {
     auth: authReducer,
