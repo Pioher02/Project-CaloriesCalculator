@@ -1,4 +1,4 @@
-import { deleteContact } from '../operations';
+import { deleteContact } from './operations';
 import { createSlice } from '@reduxjs/toolkit';
 
 const diaryInitialState = {

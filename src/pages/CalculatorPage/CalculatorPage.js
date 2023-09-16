@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { DailyCaloriesForm } from 'components/DailyCaloriesForm';
 import { SideBar } from 'components/SideBar/SideBar';
 import { ModalDailyCalorie } from 'components/ModalDailyCalorie';
-import { DailyCalorieIntake } from 'components/DailyCalorieIntake/DailyCalorieIntake';
+import { DailyCalorieIntake } from 'components/Modal/Modal';
 
 import { WrapForm, WrapSideBar, WrapPage } from './CalculatorPage.styled';
 

@@ -44,10 +44,10 @@ export const Link = styled(NavLink)`
   transition: color 300ms ease-in;
 
   &:hover {
-    color: ${p => p.theme.colors.primary};
+    color: ${p => p.theme.colors.accent};
   }
 
   &.active {
-    color: ${p => p.theme.colors.primary};
+    color: ${p => p.theme.colors.accent};
   }
 `;

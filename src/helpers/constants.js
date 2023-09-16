@@ -7,8 +7,7 @@ export const bloodTypes = [1, 2, 3, 4];
 export const routes = {
   main: '/',
   calculate: '/calculate',
-  diaryPath: '/diary/:date',
-  diaryToday: `/diary/${initialDate}`,
+  diary: '/diary',
   signup: '/signup',
   login: '/login',
 };

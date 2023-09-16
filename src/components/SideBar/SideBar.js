@@ -1,9 +1,8 @@
 import { useSelector } from 'react-redux';
-import { selectIsLoading } from 'redux/loader/selectors';
 import { productsList } from 'redux/products/selectors';
 import { selectCalculateValue } from 'redux/calculate/selectors';
 import { getSelectedDate } from 'redux/date/selectors';
-import { Loader } from 'components/Loader/Loader';
+// import { Loader } from 'components/Loader/Loader';
 import { capitalizeFirstLetter } from 'helpers/capitalizeFirstLetter';
 import { initialDate } from 'helpers/constants';
 
@@ -19,7 +18,6 @@ import {
 } from './SideBar.styled';
 
 export const SideBar = () => {
-  const isLoading = useSelector(selectIsLoading);
   const selectedDate = useSelector(getSelectedDate);
 
   const { countedCalories, notAllowedFoodCategories } =
@@ -41,7 +39,7 @@ export const SideBar = () => {
   return (
     <Box>
       <SideBarContainer>
-        {isLoading ? <Loader /> : null}
+        {/* {isLoading ? <Loader /> : null} */}
         <Title>
           Resumen para el{' '}
           <span>
