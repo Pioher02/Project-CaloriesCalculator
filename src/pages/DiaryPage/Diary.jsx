@@ -1,23 +1,51 @@
 import { Header } from '../../components/Header/Header';
 import ConsumeList from '../../components/ConsumeList';
 import Datetime from 'react-datetime';
+import './diary.css';
 import 'react-datetime/css/react-datetime.css';
 import { useSelector } from 'react-redux';
 import calendar from '../../images/calendar.svg';
+import { getSelectedDate } from 'redux/date/selectors';
 
-import { Date, Form, Section, ProductInput, GramsInput, Button  } from './DiaryPage.styles';
-
-<Datetime closeOnSelect dateFormat="DD-MM-YYYY" timeFormat={false} />;
+import {
+  DisplayDate,
+  Form,
+  Section,
+  ProductInput,
+  GramsInput,
+  Button,
+  Calendar,
+  Image,
+} from './DiaryPage.styles';
 
 const Diary = () => {
   const consumes = useSelector(state => state.diary.consume);
+  const registerDate = useSelector(getSelectedDate);
+
+  const actualDate = new Date();
 
   return (
     <>
       <Header />
       <Section>
-        <Date>13.08.2023</Date>
-        <img src={calendar} alt="calendar" />
+        {registerDate ? (
+          <DisplayDate>{registerDate}</DisplayDate>
+        ) : (
+          <DisplayDate>
+            {actualDate.getDate()}.{actualDate.getMonth() + 1}.
+            {actualDate.getFullYear()}
+          </DisplayDate>
+        )}
+        <Calendar>
+          <Image src={calendar} alt="calendar" />
+          <Datetime
+            className="rdt"
+            inputProps={{ className: 'inputtime' }}
+            closeOnSelect
+            dateFormat="DD-MM-YYYY"
+            timeFormat={false}
+          />
+        </Calendar>
       </Section>
 
       <Form>

@@ -1,9 +1,17 @@
 import styled from 'styled-components';
 
-export const Date = styled.div`
+export const DisplayDate = styled.div`
   font-size: 34px;
   font-weight: 700;
   margin: 100px 15px 0px;
+`;
+
+export const Calendar = styled.div`
+position: relative;
+`;
+
+export const Image = styled.img`
+position: relative;
 `;
 
 export const Form = styled.form`
