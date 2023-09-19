@@ -22,7 +22,7 @@ export const DailyCalorieIntake = ({
   onRequestClose,
   dataForModal,
   closeModal,
-  notAllowedFoods, // Asegúrate de que notAllowedFoods sea una propiedad
+  notAllowedFoods,
 }) => {
   const navigate = useNavigate();
   const redirectTo = '/registro';

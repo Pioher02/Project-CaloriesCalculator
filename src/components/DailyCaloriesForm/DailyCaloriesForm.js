@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { calculation } from 'redux/calculate/operations';
-import { fetchNotAllowedFoods } from 'redux/auth/operations'; // Asegúrate de importar desde la ubicación correcta
+import { fetchNotAllowedFoods } from 'redux/auth/operations';
 import { postSideBarInfo } from 'redux/products/operations';
 import { selectCalculateValue } from 'redux/calculate/selectors';
 import { selectIsLoggedIn } from 'redux/auth/selectors';
@@ -33,7 +33,7 @@ export const DailyCaloriesForm = () => {
   // Estado local para los datos de calorías y alimentos no permitidos
   const [calorieData, setCalorieData] = useState(null);
 
-  // Define una variable para los alimentos no permitidos, inicialmente como un array vacío
+  // Define una variable para los alimentos no permitidos
   const [notAllowedFoods, setNotAllowedFoods] = useState([]);
 
   const openModal = dataForModal => {
@@ -230,7 +230,7 @@ export const DailyCaloriesForm = () => {
         onRequestClose={() => setCalorieData(null)}
         dataForModal={calorieData}
         closeModal={() => setCalorieData(null)}
-        notAllowedFoods={notAllowedFoods} // Asegúrate de que esta línea esté presente
+        notAllowedFoods={notAllowedFoods}
       />
     </div>
   );
