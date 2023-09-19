@@ -1,12 +1,15 @@
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { calculation } from 'redux/calculate/operations';
+import { fetchNotAllowedFoods } from 'redux/auth/operations';
 import { postSideBarInfo } from 'redux/products/operations';
 import { selectCalculateValue } from 'redux/calculate/selectors';
 import { selectIsLoggedIn } from 'redux/auth/selectors';
 import { addCalories } from 'redux/calculate/slice';
 import { bloodTypes } from 'helpers/constants';
+import DailyCalorieIntake from '../Modal/CustomModal';
 
 import {
   Form,
@@ -24,8 +27,19 @@ import {
 } from './DailyCaloriesForm.styled';
 import { getCategoriesByBloodType } from 'helpers/getCategoriesByBloodType';
 
-export const DailyCaloriesForm = ({ openModal }) => {
+export const DailyCaloriesForm = () => {
   const dispatch = useDispatch();
+
+  // Estado local para los datos de calorías y alimentos no permitidos
+  const [calorieData, setCalorieData] = useState(null);
+
+  // Define una variable para los alimentos no permitidos
+  const [notAllowedFoods, setNotAllowedFoods] = useState([]);
+
+  const openModal = dataForModal => {
+    // Guarda los datos de calorías y alimentos no permitidos en el estado local
+    setCalorieData(dataForModal);
+  };
 
   const { formData } = useSelector(selectCalculateValue);
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -52,31 +66,41 @@ export const DailyCaloriesForm = ({ openModal }) => {
   const desiredWeightValue = watch('desiredWeight');
   const bloodTypeValue = watch('bloodType');
 
-  const onSubmitForm = formData => {
+  const onSubmitForm = async (formData) => {
     const { height, age, currentWeight, desiredWeight, bloodType } = formData;
     const countedCalories = String(
       10 * currentWeight +
-        6.25 * height -
-        5 * age -
-        161 -
-        10 * (currentWeight - desiredWeight)
+      6.25 * height -
+      5 * age -
+      161 -
+      10 * (currentWeight - desiredWeight)
     );
+
+    // Obtener alimentos no permitidos y asignarlos a notAllowedFoods
+    const fetchedNotAllowedFoods = await fetchNotAllowedFoods(bloodType);
+    setNotAllowedFoods(fetchedNotAllowedFoods);
+
+    // Tomar los primeros 4 alimentos no permitidos
+    const first4NotAllowedFoods = fetchedNotAllowedFoods.slice(0, 4);
+
     const notAllowedFoodCategories = getCategoriesByBloodType(bloodType);
+
     const dataForDispatch = {
       calorie: countedCalories,
       notRecommendedProduct: notAllowedFoodCategories,
       data: formData,
+      notAllowedFoods: first4NotAllowedFoods, // Agregar los alimentos no permitidos aquí
     };
     const dataForModal = { countedCalories, notAllowedFoodCategories };
 
     isLoggedIn
       ? dispatch(
-          calculation(dataForDispatch),
-          postSideBarInfo({
-            calorie: countedCalories,
-            notRecommendedProduct: notAllowedFoodCategories,
-          })
-        )
+        calculation(dataForDispatch),
+        postSideBarInfo({
+          calorie: countedCalories,
+          notRecommendedProduct: notAllowedFoodCategories,
+        })
+      )
       : dispatch(addCalories(dataForDispatch));
 
     openModal(dataForModal);
@@ -91,12 +115,12 @@ export const DailyCaloriesForm = ({ openModal }) => {
         <ColumnWrap>
           <Column>
             <Label>
-              Altura, cm *
+              Altura *
               <InputForm
                 value={heightValue}
                 type="number"
                 {...register('height', {
-                  required: 'Por favor ingresa tu altura en cm',
+                  required: 'Por favor ingresa tu altura ',
                   min: {
                     value: 100,
                     message: 'Altura mínima 100 cm.',
@@ -129,12 +153,12 @@ export const DailyCaloriesForm = ({ openModal }) => {
               {errors?.age && <Error>{errors?.age?.message}</Error>}
             </Label>
             <Label>
-              Peso actual, kg *
+              Peso actual *
               <InputForm
                 value={currentWeightValue}
                 type="number"
                 {...register('currentWeight', {
-                  required: 'Ingrese su peso actual en kg',
+                  required: 'Ingrese su nombre de usuario',
                   min: {
                     value: 20,
                     message: 'Peso mínimo 20 kg',
@@ -153,12 +177,12 @@ export const DailyCaloriesForm = ({ openModal }) => {
 
           <Column>
             <Label>
-              Peso deseado, kg *
+              Peso deseado *
               <InputForm
                 value={desiredWeightValue}
                 type="number"
                 {...register('desiredWeight', {
-                  required: 'Por favor ingrese su peso deseado en kg',
+                  required: 'Por favor ingrese su peso deseado',
                   min: {
                     value: 20,
                     message: 'Peso mínimo 20 kg',
@@ -200,6 +224,15 @@ export const DailyCaloriesForm = ({ openModal }) => {
           </ButtonSubmit>
         </ButtonWrap>
       </Form>
+      {/* Renderizado del modal */}
+      <DailyCalorieIntake
+        isOpen={calorieData !== null}
+        onRequestClose={() => setCalorieData(null)}
+        dataForModal={calorieData}
+        closeModal={() => setCalorieData(null)}
+        notAllowedFoods={notAllowedFoods}
+      />
     </div>
   );
 };
+
