@@ -1,26 +1,58 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import Logo from '../../images/Desktop/Logo.png';
-import LogoMobile from '../../images/Mobile/logo.png'
-import Linea from '../../images/Desktop/Vector 1.png';
-import { Container, ContainerHeader, Div, MobileLogo, Ajuste } from './header.styled';
+import { Logo } from 'components/Logo/Logo';
+import {
+  BurgerIconStyled,
+  HeaderStyled,
+  CrossIconStyled,
+} from 'components/Header/HeaderStyled';
+import { NavigationHeader } from './NavigationHeader';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn, selectUser } from 'redux/auth/selectors';
+//import { UserInfo } from '../../components/UserInfo/UserInfo';
+import { useState } from 'react';
+import { NavigationBurgerMenu } from '../../components/Navigation/NavigationBurgerMenu';
+import { selectCalculateValue } from 'redux/calculate/selectors';
 
-const Header = () => {
+export const Header = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const [burgerActive, setBurgerActive] = useState(false);
+  const { data } = useSelector(selectUser);
+  const { formData } = useSelector(selectCalculateValue);
+  const bodyEl = document.body;
+
+  const burgerOpen = () => {
+    setBurgerActive(true);
+    bodyEl.style.overflow = 'hidden';
+  };
+
+  const burgerClose = () => {
+    setBurgerActive(false);
+    bodyEl.style.overflow = 'unset';
+  };
+
   return (
-    <Container>
-    <ContainerHeader>
-      <Ajuste>
-        <img className="Logo" src={Logo} alt="Logo" />
-        <MobileLogo src={LogoMobile} alt="Logo" />
-        <img className="Linea" src={Linea} alt="Linea" style={{ marginLeft: '10px' }} />
-        <Div>
-          <Link to="/login">INICIAR SESIÓN</Link>
-          <Link to="/register">CREAR UNA CUENTA</Link>
-        </Div>
-      </Ajuste>
-    </ContainerHeader>
-    </Container>
+    <>
+      <HeaderStyled>
+        <Logo />
+        {!isLoggedIn ? (
+          <NavigationHeader isLoggedIn={isLoggedIn} />
+        ) : (
+          <>
+            <NavigationHeader isLoggedIn={isLoggedIn} />
+            {/* <UserInfo burger={burgerActive} /> */}
+            {(data?.height || formData?.height) &&
+              (burgerActive ? (
+                <CrossIconStyled onClick={burgerClose} />
+              ) : (
+                <BurgerIconStyled onClick={burgerOpen} />
+              ))}
+          </>
+        )}
+      </HeaderStyled>
+
+      <NavigationBurgerMenu
+        burgerState={burgerActive}
+        burgerClose={burgerClose}
+      />
+    </>
   );
 };
-
-export default Header;
