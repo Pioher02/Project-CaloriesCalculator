@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = "http://localhost:3001/api/";
-// axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.withCredentials = true;
 
 const token = {
   set(token) {
@@ -83,3 +83,20 @@ export const refreshToken = createAsyncThunk(
     }
   }
 );
+
+export const fetchNotAllowedFoods = async (bloodType) => {
+  try {
+    const response = await axios.get(`/api/not-allowed-foods/${bloodType}`);
+    const data = response.data;
+
+    if (Array.isArray(data)) {
+      return data;
+    } else {
+      console.error('La respuesta de la API no es un array válido:', data);
+      return [];
+    }
+  } catch (error) {
+    console.error('Error al obtener alimentos no saludables desde el backend:', error);
+    return [];
+  }
+};

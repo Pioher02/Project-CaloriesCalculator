@@ -1,18 +1,18 @@
-// components/Modal/CustomModal.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from 'redux/auth/selectors';
+import { useNavigate } from 'react-router-dom';
 import { capitalizeFirstLetter } from 'helpers/capitalizeFirstLetter';
-import { routes } from 'helpers/constants';
-
 import {
-  LinkStyled,
   ModalWrapper,
   ModalContent,
   CloseButton,
   StartLosingWeightButton,
-  customModalStyle
+  customModalStyle,
+  ModalHeader,
+  CaloriesCount,
+  ForbiddenFoodsHeading,
+  FoodList,
+  FoodListItem,
 } from './ModalStyled';
 
 Modal.setAppElement('#root');
@@ -20,12 +20,37 @@ Modal.setAppElement('#root');
 export const DailyCalorieIntake = ({
   isOpen,
   onRequestClose,
-  dataForModal: { countedCalories, notAllowedFoodCategories },
+  dataForModal,
   closeModal,
+  notAllowedFoods, // Asegúrate de que notAllowedFoods sea una propiedad
 }) => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const redirectTo = isLoggedIn ? routes.diaryToday : routes.signup;
+  const navigate = useNavigate();
+  const redirectTo = '/registro';
 
+  // Estado para almacenar los alimentos no saludables
+  const [notAllowedFoodsData, setNotAllowedFoodsData] = useState([]);
+
+  // Función para obtener los alimentos no saludables
+  const fetchNotAllowedFoods = () => {
+    fetch('/api/not-allowed-foods')
+      .then(response => response.json())
+      .then(data => setNotAllowedFoodsData(data))
+      .catch(error => console.error('Error fetching not allowed foods:', error));
+  };
+
+  // Utiliza useEffect para cargar los alimentos no saludables cuando el modal se abre
+  useEffect(() => {
+    if (isOpen) {
+      fetchNotAllowedFoods();
+    }
+  }, [isOpen]);
+
+  // Verificar si dataForModal tiene valor antes de acceder a sus propiedades
+  if (!dataForModal) {
+    return null; // No renderizar nada si dataForModal es nulo
+  }
+
+  const { countedCalories, notAllowedFoodCategories } = dataForModal;
   return (
     <Modal
       isOpen={isOpen}
@@ -34,41 +59,39 @@ export const DailyCalorieIntake = ({
       style={customModalStyle}
     >
       <ModalWrapper>
-        <h2>Tu ingesta diaria recomendada de calorías es</h2>
+        <ModalHeader>Tu ingesta diaria recomendada de calorías es</ModalHeader>
         <ModalContent>
-          <p style={{ fontFamily: 'Verdana', fontWeight: '700', fontSize: '48px', color: '#264061' }}>
-            {countedCalories} <span style={{ fontSize: '24px' }}>kcal</span>
-          </p>
+          <CaloriesCount>
+            {countedCalories} <span>kcal</span>
+          </CaloriesCount>
           <div>
-            <h3 style={{ color: '#264061' }}>Alimentos que no deberías comer</h3>
-            <ul style={{ listStyleType: 'none', padding: 0 }}>
-              {notAllowedFoodCategories.slice(0, 5).map(categorie => {
-                return (
-                  <li
-                    key={categorie}
-                    style={{
-                      backgroundColor: '#f7f7f7',
-                      border: '1px solid #ddd',
-                      borderRadius: '4px',
-                      margin: '4px 0',
-                      padding: '8px',
-                    }}
-                  >
-                    {capitalizeFirstLetter(categorie)}
-                  </li>
-                );
-              })}
-            </ul>
+            <FoodList>
+              {notAllowedFoodCategories.slice(0, 5).map((categorie, index) => (
+                <FoodListItem key={index}>
+                  {capitalizeFirstLetter(categorie)}
+                </FoodListItem>
+              ))}
+            </FoodList>
+          </div>
+          <div>
+            <ForbiddenFoodsHeading>Alimentos no permitidos</ForbiddenFoodsHeading>
+            <FoodList>
+              {/* Utiliza notAllowedFoods en lugar de notAllowedFoodsData */}
+              {notAllowedFoods.slice(0, 5).map((food, index) => (
+                <FoodListItem key={index}>
+                  {food}
+                </FoodListItem>
+              ))}
+            </FoodList>
           </div>
         </ModalContent>
         <CloseButton onClick={onRequestClose}>X</CloseButton>
-        <LinkStyled to={redirectTo}>
-          <StartLosingWeightButton onClick={closeModal}>Comienza a perder peso</StartLosingWeightButton>
-        </LinkStyled>
+        <StartLosingWeightButton onClick={() => navigate(redirectTo)}>
+          Comienza a perder peso
+        </StartLosingWeightButton>
       </ModalWrapper>
     </Modal>
   );
 };
 
 export default DailyCalorieIntake;
-

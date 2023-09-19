@@ -2,71 +2,6 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const ModalsHeadStyled = styled.p`
-  min-height: 70px;
-  margin: 0 auto;
-  text-align: center;
-  font-weight: ${props => props.theme.fontWeights.bold};
-  font-size: ${props => props.theme.fontSizes.l};
-  line-height: ${props => props.theme.lineHeights.body};
-  color: ${props => props.theme.colors.primary};
-
-  @media (max-width: 320px) {
-    padding: 0 20px 0;
-    font-size: ${props => props.theme.fontSizes.s};
-    text-align: start;
-  }
-`;
-
-export const CaloriesCountStyled = styled.p`
-  min-height: 62px;
-  margin: 20px auto 0;
-  text-align: center;
-  font-weight: ${props => props.theme.fontWeights.bold};
-  font-size: ${props => props.theme.fontSizes.xxl};
-  line-height: ${props => props.theme.lineHeights.heading};
-  letter-spacing: 0.04em;
-  color: ${props => props.theme.colors.count};
-`;
-
-export const LineStyled = styled.span`
-  display: block;
-  margin: auto;
-  border-bottom: 1px solid ${props => props.theme.colors.input};
-`;
-
-export const FoodListWrapperStyled = styled.div`
-  max-width: 330px;
-  margin: ${props => props.theme.space[5]}px auto 0;
-  padding: 0 20px 0;
-`;
-
-export const FoodListTitleStyled = styled.p`
-  margin: 12px auto 0;
-  font-weight: ${props => props.theme.fontWeights.bold};
-  line-height: ${props => props.theme.lineHeights.heading};
-  letter-spacing: 0.04em;
-  color: ${props => props.theme.colors.primary};
-  font-size: ${props => props.theme.fontSizes.xs};
-  letter-spacing: 0.04em;
-
-  @media (max-width: 320px) {
-    margin: 20px auto 0;
-  }
-`;
-
-export const FoodListStyled = styled.ol`
-  margin: 20px 0 0 0;
-  font-weight: ${props => props.theme.fontWeights.normal};
-  line-height: ${props => props.theme.lineHeights.heading};
-  color: ${props => props.theme.colors.secondary};
-  font-size: ${props => props.theme.fontSizes.xs};
-  letter-spacing: 0.04em;
-  li:not(:first-child) {
-    margin: ${props => props.theme.space[4]}px 0 0 0;
-  }
-`;
-
 export const LinkStyled = styled(NavLink)`
   display: block;
   width: 210px;
@@ -106,7 +41,6 @@ export const ButtonStyled = styled.button`
   color: ${props => props.theme.colors.white};
   cursor: pointer;
 `;
-//return styles
 
 export const customModalStyle = {
   content: {
@@ -114,25 +48,27 @@ export const customModalStyle = {
     maxWidth: '672px', // Ancho máximo para mantener una buena legibilidad
     margin: 'auto',
     border: '1px solid #E0E0E0',
-    '@media (max-width: 768px)': {
+    backgroundColor: 'white', // Color de fondo blanco
+    '@media (max-width: 768px)': { // Usar la sintaxis correcta de media query
       padding: '20px', // Cambiar el relleno para tabletas
     },
-    '@media (max-width: 576px)': {
+    '@media (max-width: 576px)': { // Usar la sintaxis correcta de media query
       padding: '10px', // Cambiar el relleno para teléfonos móviles
     },
   },
 };
+
 
 export const ModalWrapper = styled.div`
   text-align: center;
   padding: 40px;
   position: relative;
 
-  @media (max-width: 768px) {
+  @media (maxWidth: 768px) {
     padding: 20px; // Ajustar el relleno para tabletas
   }
 
-  @media (max-width: 576px) {
+  @media (maxWidth: 576px) {
     padding: 10px; // Ajustar el relleno para teléfonos móviles
   }
 `;
@@ -140,11 +76,11 @@ export const ModalWrapper = styled.div`
 export const ModalContent = styled.div`
   margin: 20px;
 
-  @media (max-width: 768px) {
+  @media (maxWidth: 768px) {
     margin: 10px;
   }
 
-  @media (max-width: 576px) {
+  @media (maxWidth: 576px) {
     margin: 5px;
   }
 `;
@@ -160,13 +96,13 @@ export const CloseButton = styled.button`
   cursor: pointer;
   font-size: 16px;
 
-  @media (max-width: 768px) {
+  @media (maxWidth: 768px) {
     top: 5px;
     right: 5px;
     font-size: 14px;
   }
 
-  @media (max-width: 576px) {
+  @media (maxWidth: 576px) {
     top: 2px;
     right: 2px;
     font-size: 12px;
@@ -189,17 +125,60 @@ export const StartLosingWeightButton = styled.button`
     background-color: #E0601A;
   }
 
-  @media (max-width: 768px) {
+  @media (maxWidth: 768px) {
     width: 160px;
     height: 35px;
     font-size: 12px;
   }
 
-  @media (max-width: 576px) {
+  @media (maxWidth: 576px) {
     width: 120px;
     height: 30px;
     font-size: 10px;
   }
+`;
 
+export const ModalHeader = styled.h2`
+  font-family: 'Verdana';
+  font-weight: 700;
+  font-size: 26px;
+  color: #264061;
+  margin: 0;
+  padding: 0;
+  span {
+    font-size: 24px;
+  }
+`;
+
+export const CaloriesCount = styled.p`
+  text-align: center;
+  font-weight: 700;
+  font-size: 48px;
+  color: #264061;
+  margin: 20px 0 0;
+  span {
+    font-size: 24px;
+  }
+`;
+
+export const ForbiddenFoodsHeading = styled.h3`
+  color: #264061;
+  font-size: 14px;
+`;
+
+export const FoodList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`;
+
+export const FoodListItem = styled.li`
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 4px 0;
+  padding: 8px;
+  font-weight: normal;
+  line-height: normal;
+  color: #264061;
 `;
 

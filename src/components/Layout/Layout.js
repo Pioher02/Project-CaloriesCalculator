@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Header } from 'components/Header/Header';
 import { Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Suspense} from 'react';
+import { Suspense } from 'react';
 import { FoneImages, Gradient } from './Layout.styled';
 import { selectIsLoggedIn, selectIsRefreshing } from 'redux/auth/selectors';
 import { HeaderUnderline } from 'components/Header/HeaderStyled';
@@ -27,7 +27,7 @@ export const Layout = () => {
           <HeaderUnderline />
           <Suspense>
             <Outlet />
-          </Suspense>          
+          </Suspense>
         </FoneImages>
       ) : (
         <Gradient>
@@ -35,7 +35,7 @@ export const Layout = () => {
           <HeaderUnderline />
           <Suspense>
             <Outlet />
-          </Suspense>          
+          </Suspense>
         </Gradient>
       )}
 
@@ -54,3 +54,4 @@ export const Layout = () => {
     </>
   );
 };
+
