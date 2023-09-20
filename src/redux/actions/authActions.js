@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 // Configuración de la URL base para las solicitudes Axios
-axios.defaults.baseURL = 'http://localhost:3000/api';
+axios.defaults.baseURL = 'http://localhost:3001/api';
 
 // Función para configurar el encabezado de autorización con el token
 const setAuthHeader = (token) => {
@@ -17,11 +17,11 @@ const clearAuthHeader = () => {
 
 // Crear una acción asincrónica de registro utilizando createAsyncThunk
 export const register = createAsyncThunk(
-  'auth/register', // Etiqueta única para identificar esta acción
+  'auth/signup', // Etiqueta única para identificar esta acción
   async (credentials, thunkAPI) => {
     try {
       // Realizar una solicitud POST para registrar al usuario
-      const response = await axios.post('/users/register', credentials);
+      const response = await axios.post('/users/signup', credentials);
       // Configurar el encabezado de autorización con el token de respuesta
       setAuthHeader(response.data.token);
       // Mostrar una notificación de éxito
@@ -54,6 +54,8 @@ export const logIn = createAsyncThunk(
       // Mostrar una notificación de éxito
       toast.success('¡Bienvenido de nuevo!');
       // Devolver los datos de respuesta
+      console.log("Estoy en authActions y esto es response.data");
+      console.log(response.data);
       return response.data;
     } catch (error) {
       if (error.response && error.response.status === 401) {

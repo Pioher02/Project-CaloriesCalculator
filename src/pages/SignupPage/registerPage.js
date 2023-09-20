@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import Header from '../components/Header/header';
-import { register } from '../redux/actions/authActions';
+import { login } from '../../redux/auth/operations';
 import { ContainerRegister, Title } from './registerPage.styled';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -15,22 +14,31 @@ const RegisterPage = () => {
   const navigate = useNavigate();
 
   const handleRegister = async () => {
+    
     try {
+      
       // Realiza una solicitud POST al servidor para registrar al usuario
-      const response = await axios.post('http://localhost:3000/api/users/register', {
-        username,
-        email,
-        password,
-      });
-
-      if (response.status === 200) {
+      const response = await axios.post(
+        'http://localhost:3001/api/users/signup',
+        {
+          username,
+          email,
+          password,
+        }
+      );
+      
+      
+      if (response.status === 201) {
+        
         // Si el registro fue exitoso, ejecuta estas acciones
-        dispatch(register({ username, email, password }));
-        navigate('/calculator');
+        dispatch(login({ email, password }));
+        navigate('/calculate');
         toast.success('¡Registro exitoso! Redirigiendo...');
       } else {
         // Si el registro no fue exitoso, muestra un mensaje de error
-        toast.error('Hubo un problema durante el registro. Por favor, inténtalo de nuevo.');
+        toast.error(
+          'Hubo un problema durante el registro. Por favor, inténtalo de nuevo.'
+        );
       }
     } catch (error) {
       console.error('Error al registrarse:', error);
@@ -40,7 +48,6 @@ const RegisterPage = () => {
 
   return (
     <div>
-      <Header />
       <ContainerRegister>
         <Title>
           <h3>CREAR UNA CUENTA</h3>
@@ -49,19 +56,19 @@ const RegisterPage = () => {
           type="text"
           placeholder="Nombre *"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={e => setUsername(e.target.value)}
         />
         <input
           type="email"
           placeholder="Correo Electrónico *"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={e => setEmail(e.target.value)}
         />
         <input
           type="password"
           placeholder="Contraseña *"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={e => setPassword(e.target.value)}
         />
         <button onClick={handleRegister}>CREAR UNA CUENTA</button>
         <Link to="/login">

@@ -15,12 +15,12 @@ const CalculatorPage = lazy(() =>
   import('../pages/CalculatorPage/CalculatorPage')
 );
 
-const SignupPage = lazy(() => import('../pages/SignupPage/SignupPage'));
+const SignupPage = lazy(() => import('../pages/SignupPage/registerPage'));
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 
 export const App = () => {
   const dispatch = useDispatch();
-  const { calorie } = useSelector(selectUser);
+  const calorie = useSelector(selectUser);
   const { isRefreshing } = useSelector(selectIsRefreshing);
   const noFormDataDirect = !calorie ? routes.calculate : routes.diary;
 
@@ -75,10 +75,7 @@ export const App = () => {
         <Route
           path={routes.diary}
           element={
-            <RestrictedRoute //PrivateRoute
-              redirectTo={routes.main}
-              component={<DiaryPage />}
-            />
+            <PrivateRoute redirectTo={routes.main} component={<DiaryPage />} />
           }
         ></Route>
 
