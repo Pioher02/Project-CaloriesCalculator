@@ -3,10 +3,7 @@ import styled from 'styled-components';
 import VerdanaBold from '../../fonts/VerdanaBold.ttf';
 
 export const HeaderNavigationWrapper = styled.div`
-   display: ${p =>
-     p.location === '/login' || p.location === '/signup' || p.location === '/'
-       ? 'flex'
-       : 'none'};
+  display: flex; 
   justify-content: center;
   gap: 14px;
   padding-top: 18px;

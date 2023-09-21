@@ -115,7 +115,7 @@ export const DailyCaloriesForm = () => {
         <ColumnWrap>
           <Column>
             <Label>
-              Altura,cm *
+              Altura, cm *
               <InputForm
                 value={heightValue}
                 type="number"
