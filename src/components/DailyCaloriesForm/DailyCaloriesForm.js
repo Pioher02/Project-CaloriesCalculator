@@ -1,14 +1,16 @@
+// components/DailyCaloriesForm/DailyCaloriesForm.js
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { calculation } from 'redux/calculate/operations';
-import { fetchNotAllowedFoods } from 'redux/auth/operations';
 import { postSideBarInfo } from 'redux/products/operations';
 import { selectCalculateValue } from 'redux/calculate/selectors';
 import { selectIsLoggedIn } from 'redux/auth/selectors';
 import { addCalories } from 'redux/calculate/slice';
 import { bloodTypes } from 'helpers/constants';
+import { loadFoodsByBloodType } from 'redux/auth/foodActions';
+import { selectNotAllowedFoods } from 'redux/auth/selectors';
 import DailyCalorieIntake from '../Modal/CustomModal';
 
 import {
@@ -33,8 +35,9 @@ export const DailyCaloriesForm = () => {
   // Estado local para los datos de calorías y alimentos no permitidos
   const [calorieData, setCalorieData] = useState(null);
 
-  // Define una variable para los alimentos no permitidos
-  const [notAllowedFoods, setNotAllowedFoods] = useState([]);
+  // Obtener notAllowedFoods fuera de onSubmitForm
+  const notAllowedFoods = useSelector(selectNotAllowedFoods).slice(0, 4);
+
 
   const openModal = dataForModal => {
     // Guarda los datos de calorías y alimentos no permitidos en el estado local
@@ -68,6 +71,10 @@ export const DailyCaloriesForm = () => {
 
   const onSubmitForm = async (formData) => {
     const { height, age, currentWeight, desiredWeight, bloodType } = formData;
+
+    // Llama a loadFoodsByBloodType para cargar los alimentos no permitidos
+    dispatch(loadFoodsByBloodType(bloodType));
+
     const countedCalories = String(
       10 * currentWeight +
       6.25 * height -
@@ -76,20 +83,13 @@ export const DailyCaloriesForm = () => {
       10 * (currentWeight - desiredWeight)
     );
 
-    // Obtener alimentos no permitidos y asignarlos a notAllowedFoods
-    const fetchedNotAllowedFoods = await fetchNotAllowedFoods(bloodType);
-    setNotAllowedFoods(fetchedNotAllowedFoods);
-
-    // Tomar los primeros 4 alimentos no permitidos
-    const first4NotAllowedFoods = fetchedNotAllowedFoods.slice(0, 4);
-
     const notAllowedFoodCategories = getCategoriesByBloodType(bloodType);
 
     const dataForDispatch = {
       calorie: countedCalories,
       notRecommendedProduct: notAllowedFoodCategories,
       data: formData,
-      notAllowedFoods: first4NotAllowedFoods, // Agregar los alimentos no permitidos aquí
+      notAllowedFoods: notAllowedFoods, // Utiliza los alimentos cargados desde Redux
     };
     const dataForModal = { countedCalories, notAllowedFoodCategories };
 
@@ -106,6 +106,7 @@ export const DailyCaloriesForm = () => {
     openModal(dataForModal);
   };
 
+
   const location = useLocation();
 
   return (
@@ -115,12 +116,12 @@ export const DailyCaloriesForm = () => {
         <ColumnWrap>
           <Column>
             <Label>
-              Altura, cm *
+              Altura *
               <InputForm
                 value={heightValue}
                 type="number"
                 {...register('height', {
-                  required: 'Por favor ingresa tu altura en cm ',
+                  required: 'Por favor ingresa tu altura ',
                   min: {
                     value: 100,
                     message: 'Altura mínima 100 cm.',
@@ -153,12 +154,12 @@ export const DailyCaloriesForm = () => {
               {errors?.age && <Error>{errors?.age?.message}</Error>}
             </Label>
             <Label>
-              Peso actual, kg *
+              Peso actual *
               <InputForm
                 value={currentWeightValue}
                 type="number"
                 {...register('currentWeight', {
-                  required: 'Ingrese su peso actual en kg',
+                  required: 'Ingrese su nombre de usuario',
                   min: {
                     value: 20,
                     message: 'Peso mínimo 20 kg',
@@ -177,12 +178,12 @@ export const DailyCaloriesForm = () => {
 
           <Column>
             <Label>
-              Peso deseado, kg *
+              Peso deseado *
               <InputForm
                 value={desiredWeightValue}
                 type="number"
                 {...register('desiredWeight', {
-                  required: 'Por favor ingrese su peso deseado en kg',
+                  required: 'Por favor ingrese su peso deseado',
                   min: {
                     value: 20,
                     message: 'Peso mínimo 20 kg',

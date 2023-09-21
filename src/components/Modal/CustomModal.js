@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+// components/Modal/CustomModal.js
+import React from 'react';
+import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 import { capitalizeFirstLetter } from 'helpers/capitalizeFirstLetter';
@@ -12,7 +14,8 @@ import {
   CaloriesCount,
   ForbiddenFoodsHeading,
   FoodList,
-  FoodListItem,
+  CustomFoodListItem,
+
 } from './ModalStyled';
 
 Modal.setAppElement('#root');
@@ -22,28 +25,10 @@ export const DailyCalorieIntake = ({
   onRequestClose,
   dataForModal,
   closeModal,
-  notAllowedFoods,
+  notAllowedFoods, //Pasar la lista de alimentos no permitidos como prop
 }) => {
   const navigate = useNavigate();
   const redirectTo = '/registro';
-
-  // Estado para almacenar los alimentos no saludables
-  const [notAllowedFoodsData, setNotAllowedFoodsData] = useState([]);
-
-  // Función para obtener los alimentos no saludables
-  const fetchNotAllowedFoods = () => {
-    fetch('/api/not-allowed-foods')
-      .then(response => response.json())
-      .then(data => setNotAllowedFoodsData(data))
-      .catch(error => console.error('Error fetching not allowed foods:', error));
-  };
-
-  // Utiliza useEffect para cargar los alimentos no saludables cuando el modal se abre
-  useEffect(() => {
-    if (isOpen) {
-      fetchNotAllowedFoods();
-    }
-  }, [isOpen]);
 
   // Verificar si dataForModal tiene valor antes de acceder a sus propiedades
   if (!dataForModal) {
@@ -51,6 +36,7 @@ export const DailyCalorieIntake = ({
   }
 
   const { countedCalories, notAllowedFoodCategories } = dataForModal;
+
   return (
     <Modal
       isOpen={isOpen}
@@ -65,24 +51,21 @@ export const DailyCalorieIntake = ({
             {countedCalories} <span>kcal</span>
           </CaloriesCount>
           <div>
-            <FoodList>
-              {notAllowedFoodCategories.slice(0, 5).map((categorie, index) => (
-                <FoodListItem key={index}>
-                  {capitalizeFirstLetter(categorie)}
-                </FoodListItem>
-              ))}
-            </FoodList>
-          </div>
-          <div>
-            <ForbiddenFoodsHeading>Alimentos no permitidos</ForbiddenFoodsHeading>
-            <FoodList>
-              {/* Utiliza notAllowedFoods en lugar de notAllowedFoodsData */}
-              {notAllowedFoods.slice(0, 5).map((food, index) => (
-                <FoodListItem key={index}>
-                  {food}
-                </FoodListItem>
-              ))}
-            </FoodList>
+            <div>
+              <ForbiddenFoodsHeading>Alimentos que no deberías comer</ForbiddenFoodsHeading>
+              <FoodList>
+                {notAllowedFoodCategories.slice(0, 5).map((categorie, index) => (
+                  <CustomFoodListItem key={index}>
+                    {capitalizeFirstLetter(categorie)}
+                  </CustomFoodListItem>
+                ))}
+                {notAllowedFoods.slice(0, 5).map((food, index) => (
+                  <CustomFoodListItem key={index}>
+                    {food.title}
+                  </CustomFoodListItem>
+                ))}
+              </FoodList>
+            </div>
           </div>
         </ModalContent>
         <CloseButton onClick={onRequestClose}>X</CloseButton>
@@ -92,6 +75,15 @@ export const DailyCalorieIntake = ({
       </ModalWrapper>
     </Modal>
   );
+};
+
+// Define los PropTypes
+DailyCalorieIntake.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onRequestClose: PropTypes.func.isRequired,
+  dataForModal: PropTypes.object,
+  closeModal: PropTypes.func,
+  notAllowedFoods: PropTypes.array.isRequired, //Propiedad para la lista de alimentos no permitidos
 };
 
 export default DailyCalorieIntake;
