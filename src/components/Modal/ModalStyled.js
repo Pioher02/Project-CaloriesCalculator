@@ -2,6 +2,32 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
+export const ModalContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+
+export const ModalCloseButton = styled.button`
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+`;
+
+export const ModalBody = styled.div`
+  padding: 16px;
+`;
+
+
 export const LinkStyled = styled(NavLink)`
   display: block;
   width: 210px;
@@ -49,10 +75,10 @@ export const customModalStyle = {
     margin: 'auto',
     border: '1px solid #E0E0E0',
     backgroundColor: 'white', // Color de fondo blanco
-    '@media (max-width: 768px)': { // Usar la sintaxis correcta de media query
+    '@media (maxWidth: 768px)': { // Usar la sintaxis correcta de media query
       padding: '20px', // Cambiar el relleno para tabletas
     },
-    '@media (max-width: 576px)': { // Usar la sintaxis correcta de media query
+    '@media(maxWidth: 576px)': { // Usar la sintaxis correcta de media query
       padding: '10px', // Cambiar el relleno para teléfonos móviles
     },
   },
@@ -102,7 +128,7 @@ export const CloseButton = styled.button`
     font-size: 14px;
   }
 
-  @media (maxWidth: 576px) {
+ @media (maxWidth: 576px) {
     top: 2px;
     right: 2px;
     font-size: 12px;
@@ -113,6 +139,7 @@ export const StartLosingWeightButton = styled.button`
   background-color: #FC842D;
   width: 210px;
   height: 43px;
+  margin-top: 43px;
   border: none;
   border-radius: 30px;
   color: white;
@@ -148,6 +175,20 @@ export const ModalHeader = styled.h2`
   span {
     font-size: 24px;
   }
+
+  @media (maxWidth: 768px) {
+    font-size: 20px;
+    span {
+      font-size: 18px;
+    }
+  }
+
+  @media (maxWidth: 576px) {
+    font-size: 18px;
+    span {
+      font-size: 16px;
+    }
+  }
 `;
 
 export const CaloriesCount = styled.p`
@@ -159,16 +200,62 @@ export const CaloriesCount = styled.p`
   span {
     font-size: 24px;
   }
+
+  @media (maxWidth: 768px) {
+    font-size: 36px;
+    margin: 10px 0 0;
+    span {
+      font-size: 18px;
+    }
+  }
+
+  @media (maxWidth: 576px) {
+    font-size: 24px;
+    margin: 5px 0 0;
+    span {
+      font-size: 16px;
+    }
+  }
 `;
 
 export const ForbiddenFoodsHeading = styled.h3`
   color: #264061;
   font-size: 14px;
+  margin-top: 52px;
+  padding-top: 90px;
+  padding-bottom: 20px;
+  text-align: center;
+  border-top: 1px solid #E0E0E0;
+  padding-top: 10px; /* Ajusta el espaciado superior según tus preferencias */
+
+  @media (maxWidth: 768px) {
+    font-size: 12px;
+    margin-top: 30px;
+    padding-top: 60px;
+    padding-bottom: 10px;
+  }
+
+  @media (maxWidth: 576px) {
+    font-size: 10px;
+    margin-top: 20px;
+    padding-top: 40px;
+    padding-bottom: 5px;
+  }
 `;
 
 export const FoodList = styled.ul`
   list-style-type: none;
+  color: #9B9FAA;
+  font-size: 14px;
   padding: 0;
+
+  @media (maxWidth: 768px) {
+    font-size: 12px;
+  }
+
+  @media (maxWidth: 576px) {
+    font-size: 10px;
+  }
 `;
 
 export const FoodListItem = styled.li`
@@ -180,5 +267,22 @@ export const FoodListItem = styled.li`
   font-weight: normal;
   line-height: normal;
   color: #264061;
+
+  @media (maxWidth: 768px) {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  @media (maxWidth: 576px) {
+    font-size: 10px;
+    padding: 4px;
+  }
 `;
 
+export const CustomFoodListItem = styled.li`
+  font-family: Verdana, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17.
+}
+`;
