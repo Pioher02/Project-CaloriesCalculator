@@ -144,7 +144,7 @@ export const ButtonWrap = styled.div`
 `;
 
 export const ButtonSubmit = styled.button`
-  width: 182px;
+  width: 210px;
   margin-bottom: ${p => p.theme.spaceForm[1]}px;
   padding: ${p => p.theme.spaceForm[0]}px;
 

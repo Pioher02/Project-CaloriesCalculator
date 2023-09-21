@@ -4,6 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 axios.defaults.baseURL = "http://localhost:3001/api";
 axios.defaults.withCredentials = true;
 
+
 const token = {
   set(token) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -45,8 +46,6 @@ export const login = createAsyncThunk(
     try {
       const res = await axios.post('/users/login', credentials);
       token.set(res.data.token);
-
-      console.log(res.data.data);
       return res.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
