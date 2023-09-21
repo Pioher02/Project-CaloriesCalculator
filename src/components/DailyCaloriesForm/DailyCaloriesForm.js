@@ -116,12 +116,12 @@ export const DailyCaloriesForm = () => {
         <ColumnWrap>
           <Column>
             <Label>
-              Altura *
+              Altura, cm *
               <InputForm
                 value={heightValue}
                 type="number"
                 {...register('height', {
-                  required: 'Por favor ingresa tu altura ',
+                  required: 'Por favor ingresa tu altura en cm',
                   min: {
                     value: 100,
                     message: 'Altura mínima 100 cm.',
@@ -154,12 +154,12 @@ export const DailyCaloriesForm = () => {
               {errors?.age && <Error>{errors?.age?.message}</Error>}
             </Label>
             <Label>
-              Peso actual *
+              Peso actual, kg *
               <InputForm
                 value={currentWeightValue}
                 type="number"
                 {...register('currentWeight', {
-                  required: 'Ingrese su nombre de usuario',
+                  required: 'Ingrese su peso actual en kg',
                   min: {
                     value: 20,
                     message: 'Peso mínimo 20 kg',
@@ -178,12 +178,12 @@ export const DailyCaloriesForm = () => {
 
           <Column>
             <Label>
-              Peso deseado *
+              Peso deseado, kg *
               <InputForm
                 value={desiredWeightValue}
                 type="number"
                 {...register('desiredWeight', {
-                  required: 'Por favor ingrese su peso deseado',
+                  required: 'Por favor ingrese su peso deseado en kg',
                   min: {
                     value: 20,
                     message: 'Peso mínimo 20 kg',
