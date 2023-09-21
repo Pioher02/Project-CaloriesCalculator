@@ -6,9 +6,11 @@ import { Link, HeaderNavigationWrapper } from './NavigationStyledHeader';
 
 export const NavigationHeader = ({ isLoggedIn }) => {
   const location = useLocation();
-  const { data } = useSelector(selectUser);
+  const data = useSelector(selectUser);
   const { formData } = useSelector(selectCalculateValue);
 
+  console.log('entró a navigationheader');
+  console.log(location);
 
   return (
     <HeaderNavigationWrapper
@@ -16,12 +18,10 @@ export const NavigationHeader = ({ isLoggedIn }) => {
       location={location.pathname}
     >
       {isLoggedIn ? (
-        (data?.height || formData?.height) && (
-          <>
-            <Link to="/diary">DIARIO</Link>
-            <Link to="/calculate">CALCULADORA</Link>
-          </>
-        )
+        <>
+          <Link to="/diary">DIARIO</Link>
+          <Link to="/calculate">CALCULADORA</Link>
+        </>
       ) : (
         <>
           <Link to="/login">INICIAR SESIÓN</Link>
