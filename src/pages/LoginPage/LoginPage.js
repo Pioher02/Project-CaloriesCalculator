@@ -12,6 +12,11 @@ const LoginPage = () => {
   const [password, setPassword] = useState(''); // Estado para el campo de contraseña
   const [emailError, setEmailError] = useState(''); // Estado para el mensaje de error del correo electrónico
   const [passwordError, setPasswordError] = useState(''); // Estado para el mensaje de error de la contraseña
+  const [buttonActive, setButtonActive] = useState(false); // Estado para el botón de login
+
+  const activateButton = () => {
+    setButtonActive(true);
+  };
 
   // Hook useDispatch para dispatch de acciones Redux
   const dispatch = useDispatch();
@@ -26,11 +31,17 @@ const LoginPage = () => {
     if (!email) {
       setEmailError('El campo de correo electrónico es obligatorio');
       isValid = false;
+    } else if (!email.includes('@')) {
+      setEmailError('El correo electrónico debe contener "@"');
+      isValid = false;
     }
 
     // Validación del campo de contraseña
     if (!password) {
       setPasswordError('El campo de contraseña es obligatorio');
+      isValid = false;
+    } else if (password.length < 8) {
+      setPasswordError('La contraseña debe tener al menos 8 caracteres');
       isValid = false;
     }
 
@@ -71,34 +82,43 @@ const LoginPage = () => {
 
   return (
     <ContainerLogin>
-      {/* Título del formulario */}
       <h3>INICIAR SESIÓN</h3>
-      <input
-        type="email"
-        placeholder="Correo Electrónico *"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)} // Actualiza el estado 'email' al cambiar el valor del campo
-      />
-      {emailError && <p className="error">{emailError}</p>} {/* Muestra el mensaje de error si existe */}
-      <input
-        type="password"
-        placeholder="Contraseña *"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)} // Actualiza el estado 'password' al cambiar el valor del campo
-      />
-      {passwordError && <p className="error">{passwordError}</p>} {/* Muestra el mensaje de error si existe */}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleLogin();
+        }}
+      >
+        <input
+          type="email"
+          placeholder="Correo Electrónico *"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onFocus={activateButton} // Activar el botón cuando se enfoca en el campo de correo
+        />
+        {emailError && <p className="error">{emailError}</p>}
+        <input
+          type="password"
+          placeholder="Contraseña *"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          onFocus={activateButton} // Activar el botón cuando se enfoca en el campo de contraseña
+        />
+        {passwordError && <p className="error">{passwordError}</p>}
 
-      <div className="button-container">
-        <button type="submit" onClick={handleLogin}>
-          INICIAR SESIÓN
-        </button>
-        <Link to="/signup">
-          <button>CREAR UNA CUENTA</button>
-        </Link>
-      </div>
+        <div className="button-container">
+          <button type="submit" className={buttonActive ? 'login-active' : ''}>
+            INICIAR SESIÓN
+          </button>
+          <Link to="/signup">
+            <button>CREAR UNA CUENTA</button>
+          </Link>
+        </div>
+      </form>
     </ContainerLogin>
   );
 };
 
-export default LoginPage; // Exporta el componente LoginPage como componente predeterminado.
+export default LoginPage;
+
 

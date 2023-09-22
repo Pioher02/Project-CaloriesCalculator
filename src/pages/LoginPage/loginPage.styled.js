@@ -83,9 +83,16 @@ export const ContainerLogin = styled.div`
       margin-left: 15px;
     }
 
+    button.login-active {
+      background-color: #FC842D;
+      color: white;
+      border: 3px solid white;
+    }
+
     /******************************************/
 
     @media screen and (min-width: 1120px) {
+      height: 75vh;
     }
 
 
@@ -143,7 +150,7 @@ export const ContainerLogin = styled.div`
       }
 
       input {
-        width: 80%;
+        width: 34vh;
         padding-top: 40px;
         padding-bottom: 30px;
         height: auto;
@@ -153,18 +160,26 @@ export const ContainerLogin = styled.div`
         font-size: 18px;
       }
 
+    div.button-container{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
       button {
-        margin-top: 60px;
-        width: 140px;
+        margin-top: 80px;
+        width: 190px;
         height: 60px;
         font-size: 18px;
       }
 
       button:last-child {
-        margin-left: 0px;
+        margin-left: 10px;
         margin-top: 30px;
         margin-bottom: 30px;
       }
     }
+
 `;
 

@@ -13,31 +13,43 @@ const RegisterPage = () => {
   const [usernameError, setUsernameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [buttonActive, setButtonActive] = useState(false); // Estado para el botón de registro
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const activateButton = () => {
+    setButtonActive(true);
+  };
+
   const handleSubmit = async () => {
     // Validaciones de campos
+    let isValid = true;
+
     if (!username) {
       setUsernameError('El campo de Nombre es obligatorio');
+      isValid = false;
     } else {
       setUsernameError('');
     }
 
     if (!email) {
       setEmailError('El campo de Correo Electrónico es obligatorio');
-    } else {
-      setEmailError('');
+      isValid = false;
+    } else if (!email.includes('@')) {
+      setEmailError('El correo electrónico debe contener "@"');
+      isValid = false;
     }
 
     if (!password) {
       setPasswordError('El campo de Contraseña es obligatorio');
-    } else {
-      setPasswordError('');
+      isValid = false;
+    } else if (password.length < 8) {
+      setPasswordError('La contraseña debe tener al menos 8 caracteres');
+      isValid = false;
     }
 
-    if (username && email && password) {
+    if (isValid) {
       try {
         // Realiza una solicitud POST al servidor para registrar al usuario
         const response = await axios.post('http://localhost:3001/api/users/signup', {
@@ -73,12 +85,12 @@ const RegisterPage = () => {
         <Title>
           <h3>CREAR UNA CUENTA</h3>
         </Title>
-        <h3>CREAR UNA CUENTA</h3>
         <input
           type="text"
           placeholder="Nombre *"
           value={username}
-          onChange={e => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
+          onFocus={activateButton} // Activar el botón cuando se enfoca en el campo de nombre
         />
         {usernameError && <p className="error">{usernameError}</p>}
 
@@ -86,7 +98,8 @@ const RegisterPage = () => {
           type="email"
           placeholder="Correo Electrónico *"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
+          onFocus={activateButton} // Activar el botón cuando se enfoca en el campo de correo
         />
         {emailError && <p className="error">{emailError}</p>}
 
@@ -94,11 +107,17 @@ const RegisterPage = () => {
           type="password"
           placeholder="Contraseña *"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
+          onFocus={activateButton} // Activar el botón cuando se enfoca en el campo de contraseña
         />
         {passwordError && <p className="error">{passwordError}</p>}
 
-        <button onClick={handleSubmit}>CREAR UNA CUENTA</button>
+        <button
+          onClick={handleSubmit}
+          className={buttonActive ? 'register-active' : ''} // Aplicar la clase si el botón está activo
+        >
+          CREAR UNA CUENTA
+        </button>
         <Link to="/login">
           <button>INICIAR SESIÓN</button>
         </Link>

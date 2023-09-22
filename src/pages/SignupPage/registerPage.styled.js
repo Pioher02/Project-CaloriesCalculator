@@ -72,17 +72,23 @@ export const ContainerRegister = styled.div`
       margin-left: 20px;
     }
 
+    button.register-active {
+      background-color: #FC842D;
+      color: white;
+      border: 3px solid white;
+    }
+
+
     /******************************************/
 
     @media screen and (min-width: 1120px) {
-
     }
 
 
     /******************************************/
 
     @media screen and (min-width: 769px) and (max-width: 1024px) {
-      height: 75vh;
+      height: 90vh;
       margin-left: 50px;
       padding: 0;
       align-items: center;
@@ -108,11 +114,9 @@ export const ContainerRegister = styled.div`
       button {
         margin-top: 60px;
         margin-bottom: 30px;
-        width: 160px;
         height: 60px;
         font-size: 16px;
       }
-
     }
 
 
@@ -146,7 +150,7 @@ export const ContainerRegister = styled.div`
 
       button {
         margin-top: 60px;
-        width: 140px;
+        width: 200px;
         height: 60px;
         font-size: 18px;
       }
@@ -166,12 +170,9 @@ export const Title = styled.div`
   display: flex;
   justify-content: space-around;
 
-  @media screen and (min-width: 769px) and (max-width: 1024px) {
-    display: none;
-  }
-
   @media (max-width: 768px) {
-    display: none;
+    width: 41%;
   }
 
 `;
+
