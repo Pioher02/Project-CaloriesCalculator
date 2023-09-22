@@ -1,11 +1,12 @@
 import ConsumeList from '../../components/ConsumeList';
+import { SideBar } from 'components/SideBar/SideBar';
 import Datetime from 'react-datetime';
+import moment from 'moment';
 import './diary.css';
 import 'react-datetime/css/react-datetime.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import calendar from '../../images/calendar.svg';
 import { getSelectedDate } from 'redux/date/selectors';
-
 import {
   DisplayDate,
   Form,
@@ -15,42 +16,58 @@ import {
   Button,
   Calendar,
   Image,
-} from './DiaryPage.styles';
-import { SideBar } from 'components/SideBar/SideBar';
+ } from './DiaryPage.styles';
+
 import {
   WrapPage,
   WrapSideBar,
 } from 'pages/CalculatorPage/CalculatorPage.styled';
 
+
 const Diary = () => {
+  const dispatch = useDispatch();
   const consumes = useSelector(state => state.diary.consume);
   const registerDate = useSelector(getSelectedDate);
 
-  const actualDate = new Date();
+  //Asigna día actual si no hay un día seleccionado
+  if (!registerDate) {
+    const actualDate = new Date();
+    const currentday = `${actualDate.getDate()}.${actualDate.getMonth() + 1}.
+    ${actualDate.getFullYear()}`;
+    dispatch(setSelectedDate(currentday));
+  }
+
+  //deshabilita los días del calendario, viene de la línea 59
+  var today = moment().subtract(1);
+  const valid = current => {
+    return current.isBefore(today);
+  };
+
+  const changeDate = e => {
+    dispatch(setSelectedDate(e.format('DD.MM.YYYY')));
+  };
 
   return (
+
     <>
       <WrapPage>
         <Section>
-          {registerDate ? (
-            <DisplayDate>{registerDate}</DisplayDate>
-          ) : (
-            <DisplayDate>
-              {actualDate.getDate()}.{actualDate.getMonth() + 1}.
-              {actualDate.getFullYear()}
-            </DisplayDate>
-          )}
+        <DisplayDate>{registerDate}</DisplayDate>
           <Calendar>
             <Image src={calendar} alt="calendar" />
             <Datetime
-              className="rdt"
-              inputProps={{ className: 'inputtime' }}
-              closeOnSelect
-              dateFormat="DD-MM-YYYY"
-              timeFormat={false}
+               className="rdt"
+               inputProps={{ className: 'inputtime' }}
+               isValidDate={valid}
+               closeOnSelect
+               dateFormat="DD-MM-YYYY"
+               timeFormat={false}
+               value={registerDate}
+               onChange={changeDate}
             />
           </Calendar>
         </Section>
+
 
         <Form>
           <ProductInput
@@ -63,13 +80,13 @@ const Diary = () => {
           <GramsInput type="number" id="grams" placeholder="Gramos" required />
           <Button>+</Button>
         </Form>
-
         <WrapSideBar>
           <SideBar />
         </WrapSideBar>
       </WrapPage>
       <ConsumeList consumes={consumes} />
     </>
+
   );
 };
 

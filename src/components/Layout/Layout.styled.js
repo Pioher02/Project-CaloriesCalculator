@@ -57,6 +57,8 @@ export const FoneImages = styled.div`
 
 export const Gradient = styled.div`
   width: 100%;
+  position: absolute;
+  top: 0px;
   background: linear-gradient(
     to top,
     ${p => p.theme.colors.track} 433px,
