@@ -44,6 +44,27 @@ export const Rightsection = styled.div`
   width: 37%;
   height: 100%;
 `;
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 1008px) {
+    flex-direction: row;
+  }
+`;
+
+export const Leftsection = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 63%;
+`;
+
+export const Rightsection = styled.div`
+  position: relative;
+  width: 37%;
+  height: 100%;
+`;
 
 export const ProductInput = styled.textarea`
   font-size: 14px;

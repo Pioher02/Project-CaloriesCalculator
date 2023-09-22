@@ -23,6 +23,8 @@ import {
   WrapSideBar,
 } from 'pages/CalculatorPage/CalculatorPage.styled';
 
+import { setSelectedDate } from 'redux/date/slice';
+
 
 const Diary = () => {
   const dispatch = useDispatch();
@@ -69,6 +71,7 @@ const Diary = () => {
         </Section>
 
 
+
         <Form>
           <ProductInput
             type="text"
@@ -86,6 +89,7 @@ const Diary = () => {
       </WrapPage>
       <ConsumeList consumes={consumes} />
     </>
+
 
   );
 };
