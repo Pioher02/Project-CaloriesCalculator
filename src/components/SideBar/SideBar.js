@@ -3,7 +3,6 @@ import { productsList } from 'redux/products/selectors';
 import { selectCalculateValue } from 'redux/calculate/selectors';
 import { getSelectedDate } from 'redux/date/selectors';
 // import { Loader } from 'components/Loader/Loader';
-import { capitalizeFirstLetter } from 'helpers/capitalizeFirstLetter';
 import { initialDate } from 'helpers/constants';
 
 import {
@@ -102,7 +101,7 @@ export const SideBar = () => {
               return (
                 <li key={product}>
                   <P>
-                    <span>{capitalizeFirstLetter(product)}</span>
+                    <span>{product.title}</span>
                   </P>
                 </li>
               );

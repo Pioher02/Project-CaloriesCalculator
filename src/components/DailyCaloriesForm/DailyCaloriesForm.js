@@ -73,7 +73,8 @@ export const DailyCaloriesForm = () => {
     const { height, age, currentWeight, desiredWeight, bloodType } = formData;
 
     // Llama a loadFoodsByBloodType para cargar los alimentos no permitidos
-    dispatch(loadFoodsByBloodType(bloodType));
+    const prueba = await dispatch(loadFoodsByBloodType(bloodType));
+    console.log(prueba.payload);
 
     const countedCalories = String(
       10 * currentWeight +
@@ -87,14 +88,15 @@ export const DailyCaloriesForm = () => {
 
     const dataForDispatch = {
       calorie: countedCalories,
-      notRecommendedProduct: notAllowedFoodCategories,
+      notRecommendedProduct: prueba.payload,
       data: formData,
-      notAllowedFoods: notAllowedFoods, // Utiliza los alimentos cargados desde Redux
+      // notAllowedFoods: notAllowedFoods, // Utiliza los alimentos cargados desde Redux
     };
     const dataForModal = { countedCalories, notAllowedFoodCategories };
+    dispatch(addCalories(dataForDispatch));
 
     if (isLoggedIn) {
-      dispatch(
+        dispatch(
         calculation(dataForDispatch),
         postSideBarInfo({
           calorie: countedCalories,
@@ -103,7 +105,6 @@ export const DailyCaloriesForm = () => {
       );
       navigate('/diary');
     } else {
-      dispatch(addCalories(dataForDispatch));
       openModal(dataForModal);
     }
   };
