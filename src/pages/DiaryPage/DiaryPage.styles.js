@@ -3,25 +3,25 @@ import styled from 'styled-components';
 export const DisplayDate = styled.div`
   font-size: 34px;
   font-weight: 700;
-  margin: 100px 15px 0px;
+  margin: -12px 15px 0px 60px;
 `;
 
 export const Calendar = styled.div`
-position: relative;
+  position: relative;
 `;
 
 export const Image = styled.img`
-position: relative;
+  position: relative;
 `;
 
 export const Form = styled.form`
   display: flex;
   margin-top: 50px;
+  margin-left: -610px;
 `;
 
 export const Section = styled.div`
   display: flex;
-  align-items: flex-end;
 `;
 
 export const ProductInput = styled.textarea`
