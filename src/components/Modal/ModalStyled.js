@@ -7,12 +7,12 @@ export const ModalContainer = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 50%;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  zIndex: 9999, 
 `;
 
 
@@ -72,6 +72,7 @@ export const customModalStyle = {
   content: {
     width: '90%', // Cambiar el ancho para tabletas y teléfonos móviles
     maxWidth: '672px', // Ancho máximo para mantener una buena legibilidad
+    height: '590px',
     margin: 'auto',
     border: '1px solid #E0E0E0',
     backgroundColor: 'white', // Color de fondo blanco
@@ -81,6 +82,7 @@ export const customModalStyle = {
     '@media(maxWidth: 576px)': { // Usar la sintaxis correcta de media query
       padding: '10px', // Cambiar el relleno para teléfonos móviles
     },
+    zIndex: 9999, // Valor alto para el z-index
   },
 };
 
@@ -176,7 +178,7 @@ export const ModalHeader = styled.h2`
     font-size: 24px;
   }
 
-  @media (maxWidth: 768px) {
+    @media (maxWidth: 768px) {
     font-size: 20px;
     span {
       font-size: 18px;
@@ -201,7 +203,7 @@ export const CaloriesCount = styled.p`
     font-size: 24px;
   }
 
-  @media (maxWidth: 768px) {
+    @media (maxWidth: 768px) {
     font-size: 36px;
     margin: 10px 0 0;
     span {
@@ -215,8 +217,8 @@ export const CaloriesCount = styled.p`
     span {
       font-size: 16px;
     }
-  }
 `;
+
 
 export const ForbiddenFoodsHeading = styled.h3`
   color: #264061;
@@ -236,7 +238,7 @@ export const ForbiddenFoodsHeading = styled.h3`
   }
 
   @media (maxWidth: 576px) {
-    font-size: 10px;
+    font-size: 12px;
     margin-top: 20px;
     padding-top: 40px;
     padding-bottom: 5px;
@@ -249,13 +251,14 @@ export const FoodList = styled.ul`
   font-size: 14px;
   padding: 0;
 
-  @media (maxWidth: 768px) {
+    @media (maxWidth: 768px) {
     font-size: 12px;
   }
 
   @media (maxWidth: 576px) {
     font-size: 10px;
   }
+  
 `;
 
 export const FoodListItem = styled.li`
@@ -268,7 +271,7 @@ export const FoodListItem = styled.li`
   line-height: normal;
   color: #264061;
 
-  @media (maxWidth: 768px) {
+   @media (maxWidth: 768px) {
     font-size: 12px;
     padding: 6px;
   }
@@ -283,6 +286,14 @@ export const CustomFoodListItem = styled.li`
   font-family: Verdana, sans-serif;
   font-weight: 400;
   font-size: 14px;
-  line-height: 17.
-}
+  line-height: 17.01px;
+  letter-spacing: 4%;
+  color: #9B9FAA;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 7px;
+  margin-left: 50px;
+  list-style: decimal; /* Agrega viñetas en números */
+  margin-left: 20px; /* Espacio entre la viñeta y el texto */
 `;

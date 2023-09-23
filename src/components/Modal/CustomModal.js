@@ -25,10 +25,14 @@ export const DailyCalorieIntake = ({
   onRequestClose,
   dataForModal,
   closeModal,
-  notAllowedFoods, //Pasar la lista de alimentos no permitidos como prop
+  notAllowedFoods, // Pasar la lista de alimentos no permitidos como prop
 }) => {
   const navigate = useNavigate();
-  const redirectTo = '/registro';
+  const redirectTo = '/signup';
+
+  const redirectToRegisterPage = () => {
+    navigate(redirectTo);
+  };
 
   // Verificar si dataForModal tiene valor antes de acceder a sus propiedades
   if (!dataForModal) {
@@ -69,11 +73,11 @@ export const DailyCalorieIntake = ({
           </div>
         </ModalContent>
         <CloseButton onClick={onRequestClose}>X</CloseButton>
-        <StartLosingWeightButton onClick={() => navigate(redirectTo)}>
+        <StartLosingWeightButton onClick={redirectToRegisterPage}>
           Comienza a perder peso
         </StartLosingWeightButton>
       </ModalWrapper>
-    </Modal>
+    </Modal >
   );
 };
 
@@ -83,7 +87,7 @@ DailyCalorieIntake.propTypes = {
   onRequestClose: PropTypes.func.isRequired,
   dataForModal: PropTypes.object,
   closeModal: PropTypes.func,
-  notAllowedFoods: PropTypes.array.isRequired, //Propiedad para la lista de alimentos no permitidos
+  notAllowedFoods: PropTypes.array.isRequired, // Agregado: Propiedad para la lista de alimentos no permitidos
 };
 
 export default DailyCalorieIntake;
