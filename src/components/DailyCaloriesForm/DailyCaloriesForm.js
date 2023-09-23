@@ -1,7 +1,7 @@
 // components/DailyCaloriesForm/DailyCaloriesForm.js
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { calculation } from 'redux/calculate/operations';
 import { postSideBarInfo } from 'redux/products/operations';
@@ -31,13 +31,13 @@ import { getCategoriesByBloodType } from 'helpers/getCategoriesByBloodType';
 
 export const DailyCaloriesForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Estado local para los datos de calorías y alimentos no permitidos
   const [calorieData, setCalorieData] = useState(null);
 
   // Obtener notAllowedFoods fuera de onSubmitForm
   const notAllowedFoods = useSelector(selectNotAllowedFoods).slice(0, 4);
-
 
   const openModal = dataForModal => {
     // Guarda los datos de calorías y alimentos no permitidos en el estado local
@@ -69,43 +69,49 @@ export const DailyCaloriesForm = () => {
   const desiredWeightValue = watch('desiredWeight');
   const bloodTypeValue = watch('bloodType');
 
-  const onSubmitForm = async (formData) => {
+  const onSubmitForm = async formData => {
     const { height, age, currentWeight, desiredWeight, bloodType } = formData;
 
+    
     // Llama a loadFoodsByBloodType para cargar los alimentos no permitidos
     dispatch(loadFoodsByBloodType(bloodType));
 
     const countedCalories = String(
       10 * currentWeight +
-      6.25 * height -
-      5 * age -
-      161 -
-      10 * (currentWeight - desiredWeight)
+        6.25 * height -
+        5 * age -
+        161 -
+        10 * (currentWeight - desiredWeight)
     );
 
     const notAllowedFoodCategories = getCategoriesByBloodType(bloodType);
+   
 
     const dataForDispatch = {
       calorie: countedCalories,
-      notRecommendedProduct: notAllowedFoodCategories,
+      notRecommendedProduct: notAllowedFoods, // Utiliza los alimentos cargados desde Redux
       data: formData,
-      notAllowedFoods: notAllowedFoods, // Utiliza los alimentos cargados desde Redux
     };
+
+    dispatch(addCalories(dataForDispatch));
+
     const dataForModal = { countedCalories, notAllowedFoodCategories };
+    
+    if (isLoggedIn) {
 
-    isLoggedIn
-      ? dispatch(
-        calculation(dataForDispatch),
-        postSideBarInfo({
-          calorie: countedCalories,
-          notRecommendedProduct: notAllowedFoodCategories,
-        })
-      )
-      : dispatch(addCalories(dataForDispatch));
-
-    openModal(dataForModal);
+      console.log("debería guardar la información en BD y asociarla a un usuario")
+      // dispatch(
+      //   calculation(dataForDispatch),
+      //   postSideBarInfo({
+      //     calorie: countedCalories,
+      //     notRecommendedProduct: notAllowedFoods,
+      //   })
+      // );
+      navigate('/diary');
+    } else {
+      openModal(dataForModal);
+    }
   };
-
 
   const location = useLocation();
 
@@ -236,4 +242,3 @@ export const DailyCaloriesForm = () => {
     </div>
   );
 };
-

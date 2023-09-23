@@ -6,6 +6,7 @@ export const calculation = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const { data } = await axios.post('calculate/calories', credentials);
+      console.log(data);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data);
