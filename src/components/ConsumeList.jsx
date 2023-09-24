@@ -6,6 +6,8 @@ margin: 50px 15px 0px;
 
 const ConsumeList = ({consumes}) => {
 
+
+    
     // primero hacer un .filter con el día y con eso hacer la validación del if
 
 

@@ -27,18 +27,6 @@ export const registration = createAsyncThunk(
   }
 );
 
-export const logOut = createAsyncThunk(
-  'auth/logout',
-  async (_, { rejectWithValue }) => {
-    try {
-      await axios.post('/auth/logout');
-      token.unset();
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
 export const login = createAsyncThunk(
   'auth/login',
   async (credentials, { rejectWithValue }) => {
@@ -51,6 +39,19 @@ export const login = createAsyncThunk(
     }
   }
 );
+
+export const logOut = createAsyncThunk(
+  'auth/logout',
+  async (_, { rejectWithValue }) => {
+    try {
+      await axios.post('/auth/logout');
+      token.unset();
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 
 export const refreshUser = createAsyncThunk(
   'auth/refresh',

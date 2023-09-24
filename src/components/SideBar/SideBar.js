@@ -3,7 +3,6 @@ import { productsList } from 'redux/products/selectors';
 import { selectCalculateValue } from 'redux/calculate/selectors';
 import { getSelectedDate } from 'redux/date/selectors';
 // import { Loader } from 'components/Loader/Loader';
-import { initialDate } from 'helpers/constants';
 
 import {
   SideBarContainer,
@@ -21,6 +20,7 @@ export const SideBar = () => {
 
   const { countedCalories, notAllowedFoodCategories } =
     useSelector(selectCalculateValue);
+
   const products = useSelector(productsList);
 
   const totalCalories = products
@@ -40,10 +40,7 @@ export const SideBar = () => {
       <SideBarContainer>
         {/* {isLoading ? <Loader /> : null} */}
         <Title>
-          Resumen para el{' '}
-          <span>
-            {selectedDate ? selectedDate : initialDate.split('-').join('.')}
-          </span>
+          Resumen para el <span>{selectedDate}</span>
         </Title>
         <TextBox>
           <ul>

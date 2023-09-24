@@ -11,12 +11,12 @@ import {
 export const productListSlice = createSlice({
   name: 'productList',
   initialState: {
-    productsDiary: [],
-    sideBarInfo: [],
+    productsAllows: [],
+    consumeDate: { date: null, productos: [], owner: null },
   },
   reducers: {
-    getList: state => {
-      return state;
+    addProducts: (state, action) => {
+      state.consumeDate = action.payload.consume;
     },
   },
   extraReducers: builder => {
@@ -54,5 +54,5 @@ export const productListSlice = createSlice({
   },
 });
 
-export const { removeItem, getList, postInfo } = productListSlice.actions;
+export const { addProducts, removeItem, getList, postInfo } = productListSlice.actions;
 export const productListReducer = productListSlice.reducer;

@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { calculation } from 'redux/calculate/operations';
-import { postSideBarInfo } from 'redux/products/operations';
 import { selectCalculateValue } from 'redux/calculate/selectors';
-import { selectIsLoggedIn } from 'redux/auth/selectors';
+import { selectIsLoggedIn, selectToken } from 'redux/auth/selectors';
 import { addCalories } from 'redux/calculate/slice';
 import { bloodTypes } from 'helpers/constants';
 import { loadFoodsByBloodType } from 'redux/auth/foodActions';
@@ -46,6 +45,7 @@ export const DailyCaloriesForm = () => {
 
   const { formData } = useSelector(selectCalculateValue);
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  let token = useSelector(selectToken);
 
   const {
     register,
@@ -73,8 +73,7 @@ export const DailyCaloriesForm = () => {
     const { height, age, currentWeight, desiredWeight, bloodType } = formData;
 
     // Llama a loadFoodsByBloodType para cargar los alimentos no permitidos
-    const prueba = await dispatch(loadFoodsByBloodType(bloodType));
-    console.log(prueba.payload);
+    const notRecommendedFood = await dispatch(loadFoodsByBloodType(bloodType));
 
     const countedCalories = String(
       10 * currentWeight +
@@ -88,23 +87,18 @@ export const DailyCaloriesForm = () => {
 
     const dataForDispatch = {
       calorie: countedCalories,
-      notRecommendedProduct: prueba.payload,
+      notRecommendedProduct: notRecommendedFood.payload, // Utiliza los alimentos cargados desde Redux
       data: formData,
-      // notAllowedFoods: notAllowedFoods, // Utiliza los alimentos cargados desde Redux
     };
     const dataForModal = { countedCalories, notAllowedFoodCategories };
-    dispatch(addCalories(dataForDispatch));
 
     if (isLoggedIn) {
-        dispatch(
-        calculation(dataForDispatch),
-        postSideBarInfo({
-          calorie: countedCalories,
-          notRecommendedProduct: notAllowedFoodCategories,
-        })
+      dispatch(
+        calculation({ dataForDispatch, token }) //Guarda info en BD
       );
       navigate('/diary');
     } else {
+      dispatch(addCalories(dataForDispatch));
       openModal(dataForModal);
     }
   };
