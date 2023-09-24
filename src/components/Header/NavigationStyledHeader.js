@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import VerdanaBold from '../../fonts/VerdanaBold.ttf';
 
 export const HeaderNavigationWrapper = styled.div`
-  display: flex; 
+  display: ${p =>
+    p.location === '/login' || p.location === '/signup' || p.location === '/'
+      ? 'flex'
+      : 'none'};
   justify-content: center;
   gap: 14px;
   padding-top: 18px;
@@ -17,7 +20,7 @@ export const HeaderNavigationWrapper = styled.div`
 
   @media (min-width: 1280px) {
     display: ${p =>
-    p.location === '/login' || p.location === '/signup' ? 'none' : 'flex'};
+      p.location === '/login' || p.location === '/signup' ? 'none' : 'flex'};
     gap: 18px;
     height: 32px;
     border-left: 2px solid #e0e0e0;
@@ -37,6 +40,7 @@ export const Link = styled(NavLink)`
   font-weight: ${p => p.theme.fontWeights.bold};
   font-size: ${p => p.theme.fontSizes.xs};
   letter-spacing: 0.04em;
+  z-index: 3;
   transition: color 300ms ease-in;
 
   &:hover {

@@ -58,7 +58,10 @@ export const App = () => {
           <Route
             path={routes.login}
             element={
-              <RestrictedRoute component={<LoginPage />} redirectTo="/calculate" />
+              <RestrictedRoute
+                component={<LoginPage />}
+                redirectTo="/calculate"
+              />
             }
           />
 
@@ -71,6 +74,15 @@ export const App = () => {
               />
             }
           />
+          <Route
+            path={routes.diary}
+            element={
+              <PrivateRoute
+                redirectTo={routes.main}
+                component={<DiaryPage />}
+              />
+            }
+          ></Route>
         </Route>
         <Route
           path={routes.diary}

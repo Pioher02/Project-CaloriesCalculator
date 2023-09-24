@@ -1,4 +1,3 @@
-import { Header } from '../../components/Header/Header';
 import ConsumeList from '../../components/ConsumeList';
 import Datetime from 'react-datetime';
 import './diary.css';
@@ -17,6 +16,11 @@ import {
   Calendar,
   Image,
 } from './DiaryPage.styles';
+import { SideBar } from 'components/SideBar/SideBar';
+import {
+  WrapPage,
+  WrapSideBar,
+} from 'pages/CalculatorPage/CalculatorPage.styled';
 
 const Diary = () => {
   const consumes = useSelector(state => state.diary.consume);
@@ -26,39 +30,44 @@ const Diary = () => {
 
   return (
     <>
-      <Header />
-      <Section>
-        {registerDate ? (
-          <DisplayDate>{registerDate}</DisplayDate>
-        ) : (
-          <DisplayDate>
-            {actualDate.getDate()}.{actualDate.getMonth() + 1}.
-            {actualDate.getFullYear()}
-          </DisplayDate>
-        )}
-        <Calendar>
-          <Image src={calendar} alt="calendar" />
-          <Datetime
-            className="rdt"
-            inputProps={{ className: 'inputtime' }}
-            closeOnSelect
-            dateFormat="DD-MM-YYYY"
-            timeFormat={false}
-          />
-        </Calendar>
-      </Section>
+      <WrapPage>
+        <Section>
+          {registerDate ? (
+            <DisplayDate>{registerDate}</DisplayDate>
+          ) : (
+            <DisplayDate>
+              {actualDate.getDate()}.{actualDate.getMonth() + 1}.
+              {actualDate.getFullYear()}
+            </DisplayDate>
+          )}
+          <Calendar>
+            <Image src={calendar} alt="calendar" />
+            <Datetime
+              className="rdt"
+              inputProps={{ className: 'inputtime' }}
+              closeOnSelect
+              dateFormat="DD-MM-YYYY"
+              timeFormat={false}
+            />
+          </Calendar>
+        </Section>
 
-      <Form>
-        <ProductInput
-          type="text"
-          id="products"
-          pattern="^[a-zA-Za-яА-Я]+(([' -][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
-          placeholder="Ingresa el nombre del producto"
-          required
-        />
-        <GramsInput type="number" id="grams" placeholder="Gramos" required />
-        <Button>+</Button>
-      </Form>
+        <Form>
+          <ProductInput
+            type="text"
+            id="products"
+            pattern="^[a-zA-Za-яА-Я]+(([' -][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
+            placeholder="Ingresa el nombre del producto"
+            required
+          />
+          <GramsInput type="number" id="grams" placeholder="Gramos" required />
+          <Button>+</Button>
+        </Form>
+
+        <WrapSideBar>
+          <SideBar />
+        </WrapSideBar>
+      </WrapPage>
       <ConsumeList consumes={consumes} />
     </>
   );

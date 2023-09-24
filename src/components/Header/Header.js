@@ -6,17 +6,15 @@ import {
 } from 'components/Header/HeaderStyled';
 import { NavigationHeader } from './NavigationHeader';
 import { useSelector } from 'react-redux';
-import { selectIsLoggedIn, selectUser } from 'redux/auth/selectors';
-//import { UserInfo } from '../../components/UserInfo/UserInfo';
+import { selectIsLoggedIn } from 'redux/auth/selectors';
+import { UserInfo } from '../../components/UserInfo/UserInfo';
 import { useState } from 'react';
 import { NavigationBurgerMenu } from '../../components/Navigation/NavigationBurgerMenu';
-import { selectCalculateValue } from 'redux/calculate/selectors';
 
 export const Header = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const [burgerActive, setBurgerActive] = useState(false);
-  const { data } = useSelector(selectUser);
-  const { formData } = useSelector(selectCalculateValue);
+
   const bodyEl = document.body;
 
   const burgerOpen = () => {
@@ -38,13 +36,12 @@ export const Header = () => {
         ) : (
           <>
             <NavigationHeader isLoggedIn={isLoggedIn} />
-            {/* <UserInfo burger={burgerActive} /> */}
-            {(data?.height || formData?.height) &&
-              (burgerActive ? (
-                <CrossIconStyled onClick={burgerClose} />
-              ) : (
-                <BurgerIconStyled onClick={burgerOpen} />
-              ))}
+            <UserInfo />
+            {burgerActive ? (
+              <CrossIconStyled onClick={burgerClose} />
+            ) : (
+              <BurgerIconStyled onClick={burgerOpen} />
+            )}
           </>
         )}
       </HeaderStyled>
