@@ -19,8 +19,7 @@ export const HeaderNavigationWrapper = styled.div`
   }
 
   @media (min-width: 1280px) {
-    display: ${p =>
-      p.location === '/login' || p.location === '/signup' ? 'none' : 'flex'};
+    display: flex;
     gap: 18px;
     height: 32px;
     border-left: 2px solid #e0e0e0;

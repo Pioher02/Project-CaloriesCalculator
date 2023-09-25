@@ -14,7 +14,7 @@ const LogoutPage = () => {
     dispatch(logOut());
     // Redirige al usuario a la página de inicio o a donde desees después del cierre de sesión
     navigate('/');
-     showSuccessToast('Sesión cerrada con éxito');
+    showSuccessToast('Sesión cerrada con éxito');
   };
 
   return (
