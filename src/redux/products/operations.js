@@ -7,11 +7,8 @@ axios.defaults.withCredentials = true;
 export const getProductsAllows = createAsyncThunk(
   'products/fetchAll',
   async (bloodType, { rejectWithValue }) => {
-    console.log(bloodType)
     try {
       const response = await axios.get(`/allowed-foods/${bloodType}`);
-      console.log("en operaciones");
-      console.log(response);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);

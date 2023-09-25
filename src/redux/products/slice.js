@@ -17,7 +17,7 @@ export const productListSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(getProductsAllows.fulfilled, (state, action) => {
-      state.productsAllows = action.payload;
+      state.productsAllows = action.payload.data;
     });
     builder.addCase(getProductsAllows.rejected, (state, action) => {
       // state.productsDiary = [];

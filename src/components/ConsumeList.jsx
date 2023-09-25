@@ -4,22 +4,22 @@ import { selectToken, selectUserBloodType } from 'redux/auth/selectors';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { getProductsAllows } from 'redux/products/operations';
+import { selectProductsList } from 'redux/products/selectors';
 
 const NoProducts = styled.div`
   margin: 50px 15px 0px;
 `;
 
 const ConsumeList = ({ consumes }) => {
-
   const dispatch = useDispatch();
   let token = useSelector(selectToken);
   dispatch(getUserInfo(token));
 
   const bloodType = useSelector(selectUserBloodType);
-  
+  const productsList = useSelector(selectProductsList);
+
   if (bloodType) {
-    const productsList = dispatch(getProductsAllows(bloodType)); //validar pero debería estar en el estado tambien
-    console.log(productsList);
+    dispatch(getProductsAllows(bloodType));
   } else {
     toast.error('Por favor ingresar datos en la calculadora');
   }

@@ -24,17 +24,17 @@ export const Section = styled.div`
   display: flex;
 `;
 
-export const ProductInput = styled.textarea`
+export const ProductInput = styled.input`
   font-size: 14px;
   font-weight: 700;
   font-family: verdana;
   width: 240px;
-  height: 37px;
+  height: 47px;
   border: none;
   border-bottom: 1px solid #e0e0e0;
   padding: 0px 0px 12px;
   margin-left: 15px;
-  resize: none;
+  text-wrap: wrap;
 `;
 
 export const GramsInput = styled.input`
@@ -42,7 +42,7 @@ export const GramsInput = styled.input`
   font-weight: 700;
   font-family: verdana;
   width: 107px;
-  height: 37px;
+  height: 47px;
   border: none;
   border-bottom: 1px solid #e0e0e0;
   padding: 0px 0px 12px;

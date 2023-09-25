@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { productsList } from 'redux/products/selectors';
+import { selectProductsList } from 'redux/products/selectors';
 import { selectCalculateValue } from 'redux/calculate/selectors';
 import { getSelectedDate } from 'redux/date/selectors';
 // import { Loader } from 'components/Loader/Loader';
@@ -21,7 +21,7 @@ export const SideBar = () => {
   const { countedCalories, notAllowedFoodCategories } =
     useSelector(selectCalculateValue);
 
-  const products = useSelector(productsList);
+  const products = useSelector(selectProductsList);
 
   const totalCalories = products
     .reduce(

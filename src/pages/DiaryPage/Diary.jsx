@@ -16,7 +16,7 @@ import {
   Button,
   Calendar,
   Image,
- } from './DiaryPage.styles';
+} from './DiaryPage.styles';
 
 import {
   WrapPage,
@@ -24,12 +24,13 @@ import {
 } from 'pages/CalculatorPage/CalculatorPage.styled';
 
 import { setSelectedDate } from 'redux/date/slice';
-
+import { useState } from 'react';
 
 const Diary = () => {
   const dispatch = useDispatch();
   const consumes = useSelector(state => state.diary.consume);
   const registerDate = useSelector(getSelectedDate);
+  const [productName, setProductName] = useState();
 
   //Asigna día actual si no hay un día seleccionado
   if (!registerDate) {
@@ -50,34 +51,32 @@ const Diary = () => {
   };
 
   return (
-
     <>
       <WrapPage>
         <Section>
-        <DisplayDate>{registerDate}</DisplayDate>
+          <DisplayDate>{registerDate}</DisplayDate>
           <Calendar>
             <Image src={calendar} alt="calendar" />
             <Datetime
-               className="rdt"
-               inputProps={{ className: 'inputtime' }}
-               isValidDate={valid}
-               closeOnSelect
-               dateFormat="DD-MM-YYYY"
-               timeFormat={false}
-               value={registerDate}
-               onChange={changeDate}
+              className="rdt"
+              inputProps={{ className: 'inputtime' }}
+              isValidDate={valid}
+              closeOnSelect
+              dateFormat="DD-MM-YYYY"
+              timeFormat={false}
+              value={registerDate}
+              onChange={changeDate}
             />
           </Calendar>
         </Section>
 
-
-
         <Form>
           <ProductInput
-            type="text"
+            name="text"
             id="products"
-            pattern="^[a-zA-Za-яА-Я]+(([' -][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
             placeholder="Ingresa el nombre del producto"
+            onChange={(ev)=>{setProductName(ev.target.value)}}
+            value={productName}
             required
           />
           <GramsInput type="number" id="grams" placeholder="Gramos" required />
@@ -89,8 +88,6 @@ const Diary = () => {
       </WrapPage>
       <ConsumeList consumes={consumes} />
     </>
-
-
   );
 };
 
