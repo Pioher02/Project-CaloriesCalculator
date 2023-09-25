@@ -7,22 +7,40 @@ import { App } from './components/App';
 import { theme } from 'theme';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
+import { Loader } from './components/Loader/Loader';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
+
 
 root.render(
   <React.StrictMode>
     <BrowserRouter basename="/">
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <App />
+          <Loader />
         </Provider>
       </ThemeProvider>
     </BrowserRouter>
 
   </React.StrictMode>
 );
+
+// Simula un tiempo de carga
+setTimeout(() => {
+  // Una vez que la aplicación se ha cargado o inicializado, reemplaza el componente Loader por tu aplicación principal
+  root.render(
+    <React.StrictMode>
+      <BrowserRouter basename="/">
+        <ThemeProvider theme={theme}>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </React.StrictMode>
+  );
+}, 1000);
 
 
 // import React, { useState, useEffect } from 'react';

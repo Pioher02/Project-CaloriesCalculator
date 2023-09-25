@@ -5,11 +5,13 @@ import { login } from '../../redux/auth/operations';
 import { ContainerRegister, Title } from './registerPage.styled';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import Loader from 'components/Loader/spinnerApp';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [usernameError, setUsernameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -23,6 +25,7 @@ const RegisterPage = () => {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true); // Activar el spinner al iniciar el registro
     // Validaciones de campos
     let isValid = true;
 
@@ -85,6 +88,7 @@ const RegisterPage = () => {
         <Title>
           <h3>CREAR UNA CUENTA</h3>
         </Title>
+        {isLoading && <Loader />} {/* Mostrar el spinner durante la carga */}
         <input
           type="text"
           placeholder="Nombre *"
