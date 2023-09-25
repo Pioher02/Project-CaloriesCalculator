@@ -1,12 +1,11 @@
 // components/DailyCaloriesForm/DailyCaloriesForm.js
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { calculation } from 'redux/calculate/operations';
-import { postSideBarInfo } from 'redux/products/operations';
 import { selectCalculateValue } from 'redux/calculate/selectors';
-import { selectIsLoggedIn } from 'redux/auth/selectors';
+import { selectIsLoggedIn, selectToken } from 'redux/auth/selectors';
 import { addCalories } from 'redux/calculate/slice';
 import { bloodTypes } from 'helpers/constants';
 import { loadFoodsByBloodType } from 'redux/auth/foodActions';
@@ -31,6 +30,7 @@ import { getCategoriesByBloodType } from 'helpers/getCategoriesByBloodType';
 
 export const DailyCaloriesForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Estado local para los datos de calorías y alimentos no permitidos
   const [calorieData, setCalorieData] = useState(null);
@@ -38,14 +38,14 @@ export const DailyCaloriesForm = () => {
   // Obtener notAllowedFoods fuera de onSubmitForm
   const notAllowedFoods = useSelector(selectNotAllowedFoods).slice(0, 4);
 
-
   const openModal = dataForModal => {
     // Guarda los datos de calorías y alimentos no permitidos en el estado local
     setCalorieData(dataForModal);
   };
 
   const { formData } = useSelector(selectCalculateValue);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isloggedin = useSelector(selectIsLoggedIn);
+  let token = useSelector(selectToken);
 
   const {
     register,
@@ -69,43 +69,39 @@ export const DailyCaloriesForm = () => {
   const desiredWeightValue = watch('desiredWeight');
   const bloodTypeValue = watch('bloodType');
 
-  const onSubmitForm = async (formData) => {
+  const onSubmitForm = async formData => {
     const { height, age, currentWeight, desiredWeight, bloodType } = formData;
 
     // Llama a loadFoodsByBloodType para cargar los alimentos no permitidos
-    dispatch(loadFoodsByBloodType(bloodType));
+    const notRecommendedFood = await dispatch(loadFoodsByBloodType(bloodType));
 
     const countedCalories = String(
       10 * currentWeight +
-      6.25 * height -
-      5 * age -
-      161 -
-      10 * (currentWeight - desiredWeight)
+        6.25 * height -
+        5 * age -
+        161 -
+        10 * (currentWeight - desiredWeight)
     );
 
     const notAllowedFoodCategories = getCategoriesByBloodType(bloodType);
 
     const dataForDispatch = {
       calorie: countedCalories,
-      notRecommendedProduct: notAllowedFoodCategories,
+      notRecommendedProduct: notRecommendedFood.payload, // Utiliza los alimentos cargados desde Redux
       data: formData,
-      notAllowedFoods: notAllowedFoods, // Utiliza los alimentos cargados desde Redux
     };
     const dataForModal = { countedCalories, notAllowedFoodCategories };
 
-    isLoggedIn
-      ? dispatch(
-        calculation(dataForDispatch),
-        postSideBarInfo({
-          calorie: countedCalories,
-          notRecommendedProduct: notAllowedFoodCategories,
-        })
-      )
-      : dispatch(addCalories(dataForDispatch));
-
-    openModal(dataForModal);
+    if (isloggedin) {
+      dispatch(
+        calculation({ dataForDispatch, token }) //Guarda info en BD
+      );
+      navigate('/diary');
+    } else {
+      dispatch(addCalories(dataForDispatch));
+      openModal(dataForModal);
+    }
   };
-
 
   const location = useLocation();
 
@@ -236,4 +232,3 @@ export const DailyCaloriesForm = () => {
     </div>
   );
 };
-

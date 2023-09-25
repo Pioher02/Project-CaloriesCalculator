@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { registration, login, logOut, refreshUser } from './operations';
+import { registration, login, logOut, refreshUser, getUserInfo } from './operations';
 
 const authInitialState = {
-  user: { name: null, email: null },
+  user: { name: null, email: null, bloodType: null, },
   token: null,
   error: null,
-  isLoggedIn: false,
+  isloggedin: false,
   isLoading: false,
   isRefreshing: true, //se cambia
   formError: null,
@@ -37,9 +37,13 @@ const authSlice = createSlice({
       .addCase(registration.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.isLoggedIn = true;
+        state.isloggedin = true;
         state.isLoading = false;
         state.error = null;
+      })
+      .addCase(getUserInfo.fulfilled, (state, action) => {
+        state.user.bloodType = action.payload.data.bloodType;
+      
       })
       .addCase(login.pending, state => {
         state.isLoading = true;
@@ -51,7 +55,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.isLoggedIn = true;
+        state.isloggedin = true;
         state.isLoading = false;
         state.error = null;
       })
@@ -64,14 +68,14 @@ const authSlice = createSlice({
           notRecommendedProduct: null,
         };
         state.token = null;
-        state.isLoggedIn = false;
+        state.isloggedin = false;
       })
       .addCase(refreshUser.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(refreshUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
-        state.isLoggedIn = true;
+        state.isloggedin = true;
         state.isRefreshing = false;
         state.isLoading = false;
         state.error = null;

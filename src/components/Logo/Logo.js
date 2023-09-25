@@ -16,8 +16,8 @@ import {
 } from './Logo.styled';
 
 export const Logo = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const path = isLoggedIn ? routes.diaryToday : routes.main;
+  const isloggedin = useSelector(selectIsLoggedIn);
+  const path = isloggedin ? routes.diaryToday : routes.main;
   const location = useLocation();
 
   return (

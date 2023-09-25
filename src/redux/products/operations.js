@@ -1,12 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchDiaryProducts = createAsyncThunk(
+axios.defaults.baseURL = 'http://localhost:3001/api';
+axios.defaults.withCredentials = true;
+
+export const getProductsAllows = createAsyncThunk(
   'products/fetchAll',
-  async (date, { rejectWithValue }) => {
+  async (bloodType, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`/diary/${date}`);
-      return data;
+      const response = await axios.get(`/allowed-foods/${bloodType}`);
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }

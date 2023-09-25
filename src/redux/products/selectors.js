@@ -1,2 +1,2 @@
-export const productsList = state => state.productList.productsDiary;
+export const selectProductsList = state => state.productList.productsAllows;
 export const sideBarInfoSelectors = state => state.productList.sideBarInfo;

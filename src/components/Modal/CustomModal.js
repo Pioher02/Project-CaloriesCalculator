@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
-import { capitalizeFirstLetter } from 'helpers/capitalizeFirstLetter';
 import {
   ModalWrapper,
   ModalContent,
@@ -60,7 +59,7 @@ export const DailyCalorieIntake = ({
               <FoodList>
                 {notAllowedFoodCategories.slice(0, 5).map((categorie, index) => (
                   <CustomFoodListItem key={index}>
-                    {capitalizeFirstLetter(categorie)}
+                    {categorie}
                   </CustomFoodListItem>
                 ))}
                 {notAllowedFoods.slice(0, 5).map((food, index) => (

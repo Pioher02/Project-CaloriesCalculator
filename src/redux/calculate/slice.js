@@ -35,9 +35,10 @@ export const calculateSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(calculation.fulfilled, (state, action) => {
-        state.formData = action.payload.data;
-        state.countedCalories = action.payload.calorie;
-        state.notAllowedFoodCategories = action.payload.notRecommendedProduct;
+        state.formData = action.payload.data.data;
+        state.countedCalories = action.payload.data.calorie;
+        state.notAllowedFoodCategories =
+          action.payload.data.notRecommendedProduct;
       })
       .addCase(refreshCalories.fulfilled, (state, action) => {
         state.formData = action.payload.data;

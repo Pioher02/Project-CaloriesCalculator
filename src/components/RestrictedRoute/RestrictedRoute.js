@@ -5,10 +5,10 @@ import { Suspense } from 'react';
 
 
 export const RestrictedRoute = ({ component: Component, redirectTo = '/' }) => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isloggedin = useSelector(selectIsLoggedIn);
   return (
     <Suspense >
-      {isLoggedIn ? <Navigate to={redirectTo} /> : Component}
+      {isloggedin ? <Navigate to={redirectTo} /> : Component}
     </Suspense>
   );
 };

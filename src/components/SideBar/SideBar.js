@@ -1,10 +1,8 @@
 import { useSelector } from 'react-redux';
-import { productsList } from 'redux/products/selectors';
+import { selectProductsList } from 'redux/products/selectors';
 import { selectCalculateValue } from 'redux/calculate/selectors';
 import { getSelectedDate } from 'redux/date/selectors';
 // import { Loader } from 'components/Loader/Loader';
-import { capitalizeFirstLetter } from 'helpers/capitalizeFirstLetter';
-import { initialDate } from 'helpers/constants';
 
 import {
   SideBarContainer,
@@ -22,7 +20,8 @@ export const SideBar = () => {
 
   const { countedCalories, notAllowedFoodCategories } =
     useSelector(selectCalculateValue);
-  const products = useSelector(productsList);
+
+  const products = useSelector(selectProductsList);
 
   const totalCalories = products
     .reduce(
@@ -36,15 +35,19 @@ export const SideBar = () => {
     2
   );
 
+  console.log("totalCalories");
+  console.log(totalCalories);
+  console.log("diffCalories");
+  console.log(diffCalories);
+  console.log("percentage");
+  console.log(percentage);
+
   return (
     <Box>
       <SideBarContainer>
         {/* {isLoading ? <Loader /> : null} */}
         <Title>
-          Resumen para el{' '}
-          <span>
-            {selectedDate ? selectedDate : initialDate.split('-').join('.')}
-          </span>
+          Resumen para el <span>{selectedDate}</span>
         </Title>
         <TextBox>
           <ul>
@@ -100,9 +103,9 @@ export const SideBar = () => {
           {notAllowedFoodCategories &&
             notAllowedFoodCategories.slice(0, 4).map(product => {
               return (
-                <li key={product}>
+                <li key={product.title}>
                   <P>
-                    <span>{capitalizeFirstLetter(product)}</span>
+                    <span>{product.title}</span>
                   </P>
                 </li>
               );

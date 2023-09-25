@@ -1,58 +1,54 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
-  addDiaryListItem,
-  fetchsideBarInfo,
-  fetchDiaryProducts,
-  removeDiaryListItem,
-  postSideBarInfo,
+  getProductsAllows,
 } from './operations';
 
 export const productListSlice = createSlice({
   name: 'productList',
   initialState: {
-    productsDiary: [],
-    sideBarInfo: [],
+    productsAllows: [],
+    consumeDate: { date: null, productos: [], owner: null },
   },
   reducers: {
-    getList: state => {
-      return state;
+    addProducts: (state, action) => {
+      state.consumeDate = action.payload.consume;
     },
   },
   extraReducers: builder => {
-    builder.addCase(fetchDiaryProducts.fulfilled, (state, action) => {
-      state.productsDiary = action.payload;
+    builder.addCase(getProductsAllows.fulfilled, (state, action) => {
+      state.productsAllows = action.payload.data;
     });
-    builder.addCase(fetchDiaryProducts.rejected, (state, action) => {
+    builder.addCase(getProductsAllows.rejected, (state, action) => {
       // state.productsDiary = [];
     });
-    builder.addCase(fetchsideBarInfo.fulfilled, (state, action) => {
-      state.sideBarInfo = action.payload;
-    });
-    builder.addCase(fetchsideBarInfo.rejected, (state, action) => {
-      // state.sideBarInfo = action.payload;
-    });
-    builder.addCase(postSideBarInfo.fulfilled, (state, action) => {
-      state.sideBarInfo = action.payload;
-    });
-    builder.addCase(postSideBarInfo.rejected, (state, action) => {
-      // state.sideBarInfo = action.payload;
-    });
-    builder.addCase(removeDiaryListItem.fulfilled, (state, action) => {
-      const idx = state.productsDiary.findIndex(product => {
-        return product._id === action.payload.id;
-      });
+  //   builder.addCase(fetchsideBarInfo.fulfilled, (state, action) => {
+  //     state.sideBarInfo = action.payload;
+  //   });
+  //   builder.addCase(fetchsideBarInfo.rejected, (state, action) => {
+  //     // state.sideBarInfo = action.payload;
+  //   });
+  //   builder.addCase(postSideBarInfo.fulfilled, (state, action) => {
+  //     state.sideBarInfo = action.payload;
+  //   });
+  //   builder.addCase(postSideBarInfo.rejected, (state, action) => {
+  //     // state.sideBarInfo = action.payload;
+  //   });
+  //   builder.addCase(removeDiaryListItem.fulfilled, (state, action) => {
+  //     const idx = state.productsDiary.findIndex(product => {
+  //       return product._id === action.payload.id;
+  //     });
 
-      state.productsDiary.splice(idx, 1);
-    });
-    builder.addCase(removeDiaryListItem.rejected, (state, action) => {
-      return state;
-    });
-    builder.addCase(addDiaryListItem.fulfilled, (state, action) => {
-      state.productsDiary.unshift(action.payload);
-    });
+  //     state.productsDiary.splice(idx, 1);
+  //   });
+  //   builder.addCase(removeDiaryListItem.rejected, (state, action) => {
+  //     return state;
+  //   });
+  //   builder.addCase(addDiaryListItem.fulfilled, (state, action) => {
+  //     state.productsDiary.unshift(action.payload);
+  //   });
   },
 });
 
-export const { removeItem, getList, postInfo } = productListSlice.actions;
+export const { addProducts, removeItem, getList, postInfo } = productListSlice.actions;
 export const productListReducer = productListSlice.reducer;

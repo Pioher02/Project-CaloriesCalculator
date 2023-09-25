@@ -9,7 +9,7 @@ export const loadFoodsByBloodType = (userBloodType) => async (dispatch) => {
         const foods = response.data;
 
         // Despacha una acción para actualizar el estado con los alimentos
-        dispatch(setFoods(foods)); // Utiliza la acción setFoods para actualizar el estado
+        return dispatch(setFoods(foods)); // Utiliza la acción setFoods para actualizar el estado
     } catch (error) {
         console.error('Error al cargar alimentos:', error);
         dispatch({
