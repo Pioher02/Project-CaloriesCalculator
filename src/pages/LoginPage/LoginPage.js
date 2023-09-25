@@ -5,6 +5,7 @@ import { login } from '../../redux/auth/operations';
 import { ContainerLogin } from './loginPage.styled';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Loader from 'components/Loader/spinnerApp';
 
 const LoginPage = () => {
   // Estados para el formulario y mensajes de error
@@ -13,6 +14,7 @@ const LoginPage = () => {
   const [emailError, setEmailError] = useState(''); // Estado para el mensaje de error del correo electrónico
   const [passwordError, setPasswordError] = useState(''); // Estado para el mensaje de error de la contraseña
   const [buttonActive, setButtonActive] = useState(false); // Estado para el botón de login
+  const [isLoading, setIsLoading] = useState(false); // Estado para controlar la carga
 
   const activateButton = () => {
     setButtonActive(true);
@@ -51,6 +53,7 @@ const LoginPage = () => {
   // Función para manejar el inicio de sesión
   const handleLogin = async () => {
     if (validateFields()) { // Validar campos antes de enviar la solicitud
+      setIsLoading(true); // Activar el spinner al iniciar sesión
       try {
         const response = await axios.post(
           'http://localhost:3001/api/users/login',
@@ -69,14 +72,16 @@ const LoginPage = () => {
       } catch (error) {
         console.error('Error al iniciar sesión:', error);
         toast.error('Error al iniciar sesión');
+      } finally {
+        setIsLoading(false); // Desactivar el spinner después de completar la solicitud
       }
-    }
+    };
 
-        // Ocultar mensajes de error después de 5 segundos
-        setTimeout(() => {
-          setEmailError('');
-          setPasswordError('');
-        }, 5000);
+    // Ocultar mensajes de error después de 5 segundos
+    setTimeout(() => {
+      setEmailError('');
+      setPasswordError('');
+    }, 5000);
 
   };
 
@@ -94,7 +99,7 @@ const LoginPage = () => {
           placeholder="Correo Electrónico *"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          onFocus={activateButton} // Activar el botón cuando se enfoca en el campo de correo
+          onFocus={activateButton}
         />
         {emailError && <p className="error">{emailError}</p>}
         <input
@@ -102,19 +107,24 @@ const LoginPage = () => {
           placeholder="Contraseña *"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          onFocus={activateButton} // Activar el botón cuando se enfoca en el campo de contraseña
+          onFocus={activateButton}
         />
         {passwordError && <p className="error">{passwordError}</p>}
 
         <div className="button-container">
-          <button type="submit" className={buttonActive ? 'login-active' : ''}>
-            INICIAR SESIÓN
+          <button
+            type="submit"
+            className={buttonActive ? 'login-active' : ''}
+            disabled={isLoading} // Deshabilitar el botón durante la carga
+          >
+            {isLoading ? 'Cargando...' : 'INICIAR SESIÓN'}
           </button>
           <Link to="/signup">
             <button>CREAR UNA CUENTA</button>
           </Link>
         </div>
       </form>
+      {isLoading && <Loader />} {/* Mostrar el spinner durante la carga */}
     </ContainerLogin>
   );
 };
