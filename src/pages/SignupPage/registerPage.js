@@ -5,6 +5,7 @@ import { login } from '../../redux/auth/operations';
 import { ContainerRegister, Title } from './registerPage.styled';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import Loader from 'components/Loader/spinnerApp';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
@@ -14,6 +15,7 @@ const RegisterPage = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [buttonActive, setButtonActive] = useState(false); // Estado para el botón de registro
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ const RegisterPage = () => {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true); // Activar el spinner al iniciar sesión
     // Validaciones de campos
     let isValid = true;
 
@@ -68,6 +71,8 @@ const RegisterPage = () => {
       } catch (error) {
         console.error('Error al registrarse:', error);
         toast.error('Error al registrarse');
+      } finally {
+        setIsLoading(false); // Desactivar el spinner después de completar la solicitud
       }
     }
 
@@ -115,13 +120,15 @@ const RegisterPage = () => {
         <button
           onClick={handleSubmit}
           className={buttonActive ? 'register-active' : ''} // Aplicar la clase si el botón está activo
+          disabled={isLoading} // Deshabilitar el botón durante la carga
         >
-          CREAR UNA CUENTA
+          {isLoading ? 'Cargando...' : 'CREAR UNA CUENTA'}
         </button>
         <Link to="/login">
           <button>INICIAR SESIÓN</button>
         </Link>
       </ContainerRegister>
+      {isLoading && <Loader />} {/* Mostrar el spinner durante la carga */}
     </div>
   );
 };
