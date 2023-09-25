@@ -35,13 +35,6 @@ export const SideBar = () => {
     2
   );
 
-  console.log("totalCalories");
-  console.log(totalCalories);
-  console.log("diffCalories");
-  console.log(diffCalories);
-  console.log("percentage");
-  console.log(percentage);
-
   return (
     <Box>
       <SideBarContainer>

@@ -19,7 +19,8 @@ import {
   Button,
   Calendar,
   Image,
-} from './DiaryPage.styles';
+  List,
+} from './DiaryPage.styled';
 
 import {
   WrapPage,
@@ -36,16 +37,17 @@ const Diary = () => {
   const registerDate = useSelector(getSelectedDate);
   const [productName, setProductName] = useState();
   const [bloodTypeRecent, setbloodTypeRecent] = useState(); //Estado para evitar bucle
+  const [showList, setShowList] = useState(); //Estado para mostrar productos permitidos
   
   const userData = useSelector(selectCalculateValue);
-  const bloodType = userData.formData.bloodType
+  const bloodType = userData.formData.bloodType;
 
-  if (bloodType!==bloodTypeRecent) {
+  if (bloodType !== bloodTypeRecent) {
     dispatch(getProductsAllows(bloodType));
-    setbloodTypeRecent(bloodType)
-
-  } 
+    setbloodTypeRecent(bloodType);
+  }
   const productsList = useSelector(selectProductsList);
+  console.log(productsList);
 
   //Asigna día actual si no hay un día seleccionado
   if (!registerDate) {
@@ -55,7 +57,7 @@ const Diary = () => {
     dispatch(setSelectedDate(currentday));
   }
 
-  //deshabilita los días del calendario, viene de la línea 59
+  //deshabilita los días del calendario
   var today = moment().subtract(1);
   const valid = current => {
     return current.isBefore(today);
@@ -90,13 +92,33 @@ const Diary = () => {
             name="text"
             id="products"
             placeholder="Ingresa el nombre del producto"
-            onChange={(ev)=>{setProductName(ev.target.value)}}
+            onChange={ev => {
+              setProductName(ev.target.value);
+              setShowList(true);
+            }}
             value={productName}
             required
           />
           <GramsInput type="number" id="grams" placeholder="Gramos" required />
           <Button>+</Button>
+
+          {showList && productName ? (
+            <ul>
+              {productsList
+                .filter(product =>
+                  product.title
+                    .toLocaleLowerCase()
+                    .includes(productName.toLocaleLowerCase())
+                )
+                .map(product => {
+                  return <List key={product._id} onClick={()=> {setProductName(product.title); setShowList(false);}}>{product.title}</List>;
+                })}
+            </ul>
+          ) : (
+            ''
+          )}
         </Form>
+
         <WrapSideBar>
           <SideBar />
         </WrapSideBar>

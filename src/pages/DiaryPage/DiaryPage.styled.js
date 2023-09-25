@@ -15,9 +15,16 @@ export const Image = styled.img`
 `;
 
 export const Form = styled.form`
-  display: flex;
+  display: block;
   margin-top: 50px;
   margin-left: -610px;
+`;
+
+export const List = styled.li`
+padding: 5px 0px;
+border-bottom: 1px solid rgb(224, 224, 224);
+cursor: pointer;
+transition: background-color 0.5s ease 0s;
 `;
 
 export const Section = styled.div`
