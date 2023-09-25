@@ -1,9 +1,8 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-axios.defaults.baseURL = "http://localhost:3001/api";
+axios.defaults.baseURL = 'http://localhost:3001/api';
 axios.defaults.withCredentials = true;
-
 
 const token = {
   set(token) {
@@ -84,4 +83,3 @@ export const refreshToken = createAsyncThunk(
     }
   }
 );
-
