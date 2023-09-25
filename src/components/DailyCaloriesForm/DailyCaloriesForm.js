@@ -44,7 +44,7 @@ export const DailyCaloriesForm = () => {
   };
 
   const { formData } = useSelector(selectCalculateValue);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isloggedin = useSelector(selectIsLoggedIn);
   let token = useSelector(selectToken);
 
   const {
@@ -92,7 +92,7 @@ export const DailyCaloriesForm = () => {
     };
     const dataForModal = { countedCalories, notAllowedFoodCategories };
 
-    if (isLoggedIn) {
+    if (isloggedin) {
       dispatch(
         calculation({ dataForDispatch, token }) //Guarda info en BD
       );

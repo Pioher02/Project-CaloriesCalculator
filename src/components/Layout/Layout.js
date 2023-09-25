@@ -12,16 +12,16 @@ import { refreshCalories } from 'redux/calculate/operations';
 
 export const Layout = () => {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isloggedin = useSelector(selectIsLoggedIn);
   const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    isLoggedIn && !isRefreshing && dispatch(refreshCalories());
-  }, [dispatch, isLoggedIn, isRefreshing]);
+    isloggedin && !isRefreshing && dispatch(refreshCalories());
+  }, [dispatch, isloggedin, isRefreshing]);
 
   return (
     <>
-      {!isLoggedIn ? (
+      {!isloggedin ? (
         <FoneImages>
           <Header />
           <HeaderUnderline />

@@ -2,15 +2,15 @@ import { useLocation } from 'react-router-dom';
 
 import { Link, HeaderNavigationWrapper } from './NavigationStyledHeader';
 
-export const NavigationHeader = ({ isLoggedIn }) => {
+export const NavigationHeader = ({ isloggedin }) => {
   const location = useLocation();
 
   return (
     <HeaderNavigationWrapper
-      isLoggedIn={isLoggedIn}
+    isloggedin={isloggedin}
       location={location.pathname}
     >
-      {isLoggedIn ? (
+      {isloggedin ? (
         <>
           <Link to={`/diary/`}>DIARIO</Link>
           <Link to="/calculate">CALCULADORA</Link>

@@ -5,7 +5,7 @@ import { register, logIn, logOut, refreshUser } from '../actions/authActions'; /
 const initialState = {
   user: { name: null, email: null },
   token: null,
-  isLoggedIn: false,
+  isloggedin: false,
   isRefreshing: false,
 };
 
@@ -21,20 +21,20 @@ const authSlice = createSlice({
         // Actualizar el estado con los datos del usuario y el token
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.isLoggedIn = true;
+        state.isloggedin = true;
       })
       // Reductor para la acción de inicio de sesión completada con éxito
       .addCase(logIn.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.isLoggedIn = true;
+        state.isloggedin = true;
       })
       // Reductor para la acción de cierre de sesión completada con éxito
       .addCase(logOut.fulfilled, (state, action) => {
         // Restablecer el estado de usuario, token e indicador de inicio de sesión
         state.user = { name: null, email: null };
         state.token = null;
-        state.isLoggedIn = false;
+        state.isloggedin = false;
       })
       // Reductor para la acción de actualización de usuario en curso
       .addCase(refreshUser.pending, (state) => {
@@ -45,7 +45,7 @@ const authSlice = createSlice({
       .addCase(refreshUser.fulfilled, (state, action) => {
         // Actualizar el estado con los nuevos datos del usuario, indicar que el usuario está conectado y restablecer el indicador de actualización
         state.user = action.payload;
-        state.isLoggedIn = true;
+        state.isloggedin = true;
         state.isRefreshing = false;
       })
       // Reductor para la acción de actualización de usuario rechazada o fallida

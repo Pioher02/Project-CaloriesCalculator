@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { NavigationBurgerMenu } from '../../components/Navigation/NavigationBurgerMenu';
 
 export const Header = () => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isloggedin = useSelector(selectIsLoggedIn);
   const [burgerActive, setBurgerActive] = useState(false);
 
   const bodyEl = document.body;
@@ -31,11 +31,11 @@ export const Header = () => {
     <>
       <HeaderStyled>
         <Logo />
-        {!isLoggedIn ? (
-          <NavigationHeader isLoggedIn={isLoggedIn} />
+        {!isloggedin ? (
+          <NavigationHeader isloggedin={isloggedin} />
         ) : (
           <>
-            <NavigationHeader isLoggedIn={isLoggedIn} />
+            <NavigationHeader isloggedin={isloggedin} />
             <UserInfo />
             {burgerActive ? (
               <CrossIconStyled onClick={burgerClose} />

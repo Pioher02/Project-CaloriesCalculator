@@ -7,6 +7,9 @@ import 'react-datetime/css/react-datetime.css';
 import { useDispatch, useSelector } from 'react-redux';
 import calendar from '../../images/calendar.svg';
 import { getSelectedDate } from 'redux/date/selectors';
+import { getProductsAllows } from 'redux/products/operations';
+import { selectProductsList } from 'redux/products/selectors';
+
 import {
   DisplayDate,
   Form,
@@ -25,12 +28,24 @@ import {
 
 import { setSelectedDate } from 'redux/date/slice';
 import { useState } from 'react';
+import { selectCalculateValue } from 'redux/calculate/selectors';
 
 const Diary = () => {
   const dispatch = useDispatch();
   const consumes = useSelector(state => state.diary.consume);
   const registerDate = useSelector(getSelectedDate);
   const [productName, setProductName] = useState();
+  const [bloodTypeRecent, setbloodTypeRecent] = useState(); //Estado para evitar bucle
+  
+  const userData = useSelector(selectCalculateValue);
+  const bloodType = userData.formData.bloodType
+
+  if (bloodType!==bloodTypeRecent) {
+    dispatch(getProductsAllows(bloodType));
+    setbloodTypeRecent(bloodType)
+
+  } 
+  const productsList = useSelector(selectProductsList);
 
   //Asigna día actual si no hay un día seleccionado
   if (!registerDate) {

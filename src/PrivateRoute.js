@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../src/redux/selectors/authSelectors';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isloggedin = useSelector(selectIsLoggedIn);
 
   return (
     <Route
       {...rest}
-      element={isLoggedIn ? <Component /> : <Navigate to="/login" />}
+      element={isloggedin ? <Component /> : <Navigate to="/login" />}
     />
   );
 };

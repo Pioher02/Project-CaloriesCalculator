@@ -35,6 +35,13 @@ export const SideBar = () => {
     2
   );
 
+  console.log("totalCalories");
+  console.log(totalCalories);
+  console.log("diffCalories");
+  console.log(diffCalories);
+  console.log("percentage");
+  console.log(percentage);
+
   return (
     <Box>
       <SideBarContainer>
@@ -96,7 +103,7 @@ export const SideBar = () => {
           {notAllowedFoodCategories &&
             notAllowedFoodCategories.slice(0, 4).map(product => {
               return (
-                <li key={product}>
+                <li key={product.title}>
                   <P>
                     <span>{product.title}</span>
                   </P>
