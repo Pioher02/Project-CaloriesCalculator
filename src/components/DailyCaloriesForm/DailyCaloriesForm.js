@@ -1,5 +1,5 @@
 // components/DailyCaloriesForm/DailyCaloriesForm.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -11,6 +11,7 @@ import { bloodTypes } from 'helpers/constants';
 import { loadFoodsByBloodType } from 'redux/auth/foodActions';
 import { selectNotAllowedFoods } from 'redux/auth/selectors';
 import DailyCalorieIntake from '../Modal/CustomModal';
+import Loader from '../Loader/spinnerApp';
 
 import {
   Form,
@@ -34,9 +35,17 @@ export const DailyCaloriesForm = () => {
 
   // Estado local para los datos de calorías y alimentos no permitidos
   const [calorieData, setCalorieData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Obtener notAllowedFoods fuera de onSubmitForm
   const notAllowedFoods = useSelector(selectNotAllowedFoods).slice(0, 4);
+
+  useEffect(() => {
+    // Simula un tiempo de carga (esto es solo un ejemplo)
+    setTimeout(() => {
+      setIsLoading(false); // Cambia el estado para indicar que la carga ha terminado
+    }, 1000); // Por ejemplo, 2000 milisegundos (2 segundos) de tiempo de carga simulado
+  }, []);
 
   const openModal = dataForModal => {
     // Guarda los datos de calorías y alimentos no permitidos en el estado local
@@ -77,10 +86,10 @@ export const DailyCaloriesForm = () => {
 
     const countedCalories = String(
       10 * currentWeight +
-        6.25 * height -
-        5 * age -
-        161 -
-        10 * (currentWeight - desiredWeight)
+      6.25 * height -
+      5 * age -
+      161 -
+      10 * (currentWeight - desiredWeight)
     );
 
     const notAllowedFoodCategories = getCategoriesByBloodType(bloodType);
@@ -221,6 +230,7 @@ export const DailyCaloriesForm = () => {
           </ButtonSubmit>
         </ButtonWrap>
       </Form>
+      {isLoading && <Loader />}
       {/* Renderizado del modal */}
       <DailyCalorieIntake
         isOpen={calorieData !== null}
