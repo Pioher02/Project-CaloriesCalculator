@@ -7,8 +7,11 @@ import 'react-datetime/css/react-datetime.css';
 import { useDispatch, useSelector } from 'react-redux';
 import calendar from '../../images/calendar.svg';
 import { getSelectedDate } from 'redux/date/selectors';
-import { getProductsAllows } from 'redux/products/operations';
-import { selectProductsList } from 'redux/products/selectors';
+import { getProductsAllows, keepConsumeProducts } from 'redux/products/operations';
+import {
+  selectConsumeProducts,
+  selectProductsList,
+} from 'redux/products/selectors';
 
 import {
   DisplayDate,
@@ -30,30 +33,49 @@ import {
 import { setSelectedDate } from 'redux/date/slice';
 import { useState } from 'react';
 import { selectCalculateValue } from 'redux/calculate/selectors';
+import { addProducts } from 'redux/products/slice';
+import { selectToken } from 'redux/auth/selectors';
 
 const Diary = () => {
   const dispatch = useDispatch();
   const consumes = useSelector(state => state.diary.consume);
   const registerDate = useSelector(getSelectedDate);
+  const consumeProducts = useSelector(selectConsumeProducts);
+  let token = useSelector(selectToken);
   const [productName, setProductName] = useState();
   const [bloodTypeRecent, setbloodTypeRecent] = useState(); //Estado para evitar bucle
   const [showList, setShowList] = useState(); //Estado para mostrar productos permitidos
-  
+
   const userData = useSelector(selectCalculateValue);
   const bloodType = userData.formData.bloodType;
 
+  //Obtiene los productos permitidos
   if (bloodType !== bloodTypeRecent) {
     dispatch(getProductsAllows(bloodType));
     setbloodTypeRecent(bloodType);
   }
   const productsList = useSelector(selectProductsList);
-  console.log(productsList);
 
   //Asigna día actual si no hay un día seleccionado
+  const actualDate = new Date();
+
+  let day = '';
+  if (actualDate.getDate() < 10) {
+    day = `0${actualDate.getDate()}`;
+  } else {
+    day = `${actualDate.getDate()}`;
+  }
+
+  let month = '';
+  if (actualDate.getMonth() < 9) {
+    month = `0${1 + actualDate.getMonth()}`;
+  } else {
+    month = `${1 + actualDate.getMonth()}`;
+  }
+
+  const currentday = `${day}.${month}.${actualDate.getFullYear()}`;
+
   if (!registerDate) {
-    const actualDate = new Date();
-    const currentday = `${actualDate.getDate()}.${actualDate.getMonth() + 1}.
-    ${actualDate.getFullYear()}`;
     dispatch(setSelectedDate(currentday));
   }
 
@@ -63,9 +85,49 @@ const Diary = () => {
     return current.isBefore(today);
   };
 
+  //Asigna día al seleccionado en el calendario
   const changeDate = e => {
     dispatch(setSelectedDate(e.format('DD.MM.YYYY')));
   };
+
+  //Obtiene los productos que consumio
+  const saveProduct = evt => {
+    evt.preventDefault();
+    const form = evt.currentTarget;
+
+    const producSelected = productsList.find(
+      product => product.title === productName
+    );
+
+    const product = {
+      productConsume: producSelected.title,
+      grams: form.elements.grams.value,
+      calories: producSelected.calories,
+    };
+
+    keepConsume(product); //funcion que va a guardar la info
+
+    form.reset();
+    setProductName('');
+  };
+
+  //Guarda la información
+  const keepConsume = consumeList => {
+
+    const dataForDispatch = {
+      date: registerDate,
+      products: [...consumeProducts.products, consumeList],
+    }
+    dispatch(
+      addProducts(dataForDispatch)
+    ); // Guarda en local
+
+    dispatch(
+      keepConsumeProducts({ dataForDispatch, token }) //Guarda en BD
+    );
+  };
+
+  // console.log(consumeProducts);
 
   return (
     <>
@@ -87,9 +149,9 @@ const Diary = () => {
           </Calendar>
         </Section>
 
-        <Form>
+        <Form onSubmit={saveProduct}>
           <ProductInput
-            name="text"
+            name="product"
             id="products"
             placeholder="Ingresa el nombre del producto"
             onChange={ev => {
@@ -99,8 +161,16 @@ const Diary = () => {
             value={productName}
             required
           />
-          <GramsInput type="number" id="grams" placeholder="Gramos" required />
-          <Button>+</Button>
+          <GramsInput
+            type="number"
+            id="grams"
+            name="grams"
+            placeholder="Gramos"
+            required
+          />
+          <Button type="submit" disabled={registerDate !== currentday}>
+            +
+          </Button>
 
           {showList && productName ? (
             <ul>
@@ -111,7 +181,17 @@ const Diary = () => {
                     .includes(productName.toLocaleLowerCase())
                 )
                 .map(product => {
-                  return <List key={product._id} onClick={()=> {setProductName(product.title); setShowList(false);}}>{product.title}</List>;
+                  return (
+                    <List
+                      key={product._id}
+                      onClick={() => {
+                        setProductName(product.title);
+                        setShowList(false);
+                      }}
+                    >
+                      {product.title}
+                    </List>
+                  );
                 })}
             </ul>
           ) : (

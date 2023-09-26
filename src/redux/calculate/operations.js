@@ -11,7 +11,7 @@ export const calculation = createAsyncThunk(
     const userInfo = credentials.dataForDispatch;
 
     try {
-      const data = await axios.put('/users/current/:id', userInfo, {
+      const data = await axios.post('/users/current/:id', userInfo, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

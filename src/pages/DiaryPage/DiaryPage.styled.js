@@ -66,4 +66,10 @@ export const Button = styled.button`
   color: white;
   font-size: 30px;
   box-shadow: 0px 4px 10px 0px #fc842d;
+  cursor: pointer;
+
+  &:disabled {
+    background-color: #FFB37C;
+    cursor: not-allowed;
+  }
 `;
