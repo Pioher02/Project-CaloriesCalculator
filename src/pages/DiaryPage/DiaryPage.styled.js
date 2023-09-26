@@ -19,7 +19,7 @@ export const Form = styled.form`
 
   @media (max-width: 1279px) {
     margin-left: 50px;
-    margin-bottom: 120px;
+    margin-bottom: 30px;
   }
 `;
 
@@ -27,6 +27,10 @@ export const Section = styled.div`
   display: flex;
   align-items: end;
   gap: 10px;
+
+  @media (max-width: 1279px) {
+    margin-left: 50px;
+  }
 `;
 
 export const ProductInput = styled.input`
@@ -64,6 +68,7 @@ export const Button = styled.button`
   color: white;
   font-size: 30px;
   box-shadow: 0px 4px 10px 0px #fc842d;
+  cursor:pointer;
 
   &:disabled {
     background-color: #ffb37c;
@@ -81,4 +86,10 @@ export const List = styled.li`
   border-bottom: 1px solid rgb(224, 224, 224);
   cursor: pointer;
   transition: background-color 0.5s ease 0s;
+`;
+
+export const Ul = styled.ul`
+@media (max-width: 1279px) {
+  margin-left: 50px;
+}
 `;

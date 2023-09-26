@@ -2,37 +2,53 @@ import styled from 'styled-components';
 
 const Text = styled.p`
   margin-top: 50px;
-//   @media (max-width: 1279px) {
-//   top: 400px;
-//   left: 60px;
-// }
-
-// @media (max-width: 767px) {
-//   top: 380px;
-// }
+`;
+const Table = styled.table`
+  margin-top: 10px;
+  font-size: 14px;
 `;
 
+const FirstRow = styled.td`
+  border-bottom: 1px solid rgb(224, 224, 224);
+  width: 240px;
+`;
+
+const Row = styled.td`
+  border-bottom: 1px solid rgb(224, 224, 224);
+  text-align: end;
+  width: 100px;
+
+  @media (max-width: 767px) {
+    width: 80px;
+  }
+`;
+const Button = styled.button`
+  border: none;
+  background-color: transparent;
+  color: #9b9faa;
+  cursor: pointer;
+`;
 
 const ConsumeList = ({ consumes }) => {
   if (consumes.length === 0) {
     return <Text>No hay productos en el diario para este día</Text>;
   } else {
     return (
-      <table>
+      <Table>
         <tbody>
           {consumes.map(consume => {
             return (
               <tr>
-                <td>{consume.productConsume}</td> <td>{consume.grams} g</td>
-                <td>{consume.calories} kcal</td>
+                <FirstRow>{consume.productConsume}</FirstRow> <Row>{consume.grams} g</Row>
+                <Row>{consume.calories} kcal</Row>
                 <td>
-                  <button>X</button>
+                  <Button>X</Button>
                 </td>
               </tr>
             );
           })}
         </tbody>
-      </table>
+      </Table>
     );
   }
 };

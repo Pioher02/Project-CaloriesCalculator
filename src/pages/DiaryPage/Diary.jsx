@@ -22,7 +22,7 @@ import {
   Button,
   Calendar,
   Image,
-  List,
+  List, Ul,
 } from './DiaryPage.styled';
 
 import {
@@ -131,7 +131,7 @@ const Diary = () => {
   return (
     <>
       <WrapPage>
-      <div>
+      <div style={{marginBottom: "100px"}}>
         <Section>
           <DisplayDate>{registerDate}</DisplayDate>
           <Calendar>
@@ -171,9 +171,10 @@ const Diary = () => {
           <Button type="submit" disabled={registerDate !== currentday}>
             +
           </Button>
-
-          {showList && productName ? (
-            <ul>
+       
+        </Form>
+        {showList && productName ? (
+            <Ul>
               {productsList
                 .filter(product =>
                   product.title
@@ -193,11 +194,10 @@ const Diary = () => {
                     </List>
                   );
                 })}
-            </ul>
+            </Ul>
           ) : (
             ''
           )}
-        </Form>
         <ConsumeList consumes={consumeProducts.products} />
         </div>
         <WrapSideBar>

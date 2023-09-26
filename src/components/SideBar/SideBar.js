@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { selectProductsList } from 'redux/products/selectors';
+import { selectConsumeProducts } from 'redux/products/selectors';
 import { selectCalculateValue } from 'redux/calculate/selectors';
 import { getSelectedDate } from 'redux/date/selectors';
 // import { Loader } from 'components/Loader/Loader';
@@ -21,14 +21,14 @@ export const SideBar = () => {
   const { countedCalories, notAllowedFoodCategories } =
     useSelector(selectCalculateValue);
 
-  // const products = useSelector(selectProductsList);
+  const productsList = useSelector(selectConsumeProducts);
+  const products = productsList.products;
+  const consumeCalories = products.map(product => product.calories);
 
-  const products = [];
-  
-  const totalCalories = products
+   const totalCalories = consumeCalories
     .reduce(
       (accumulator, currentValue) =>
-        accumulator + Number(currentValue.productCalories),
+        accumulator + Number(currentValue),
       0
     )
     .toFixed(2);
