@@ -8,11 +8,11 @@ export const productListSlice = createSlice({
   name: 'productList',
   initialState: {
     productsAllows: [],
-    consumeDate: { date: null, productos: [], owner: null },
+    consumeDate: { date: null, products: [], owner: null },
   },
   reducers: {
     addProducts: (state, action) => {
-      state.consumeDate = action.payload.consume;
+      state.consumeDate = action.payload;
     },
   },
   extraReducers: builder => {

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const DisplayDate = styled.div`
   font-size: 34px;
   font-weight: 700;
-  margin: -12px 15px 0px 60px;
 `;
 
 export const Calendar = styled.div`
@@ -17,11 +16,21 @@ export const Image = styled.img`
 export const Form = styled.form`
   display: flex;
   margin-top: 50px;
-  margin-left: -610px;
+
+  @media (max-width: 1279px) {
+    margin-left: 50px;
+    margin-bottom: 30px;
+  }
 `;
 
 export const Section = styled.div`
   display: flex;
+  align-items: end;
+  gap: 10px;
+
+  @media (max-width: 1279px) {
+    margin-left: 50px;
+  }
 `;
 
 export const ProductInput = styled.input`
@@ -59,4 +68,28 @@ export const Button = styled.button`
   color: white;
   font-size: 30px;
   box-shadow: 0px 4px 10px 0px #fc842d;
+  cursor:pointer;
+
+  &:disabled {
+    background-color: #ffb37c;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 767px) {
+    position: absolute;
+    top: 33%;
+    left: 35%;
+  }
+`;
+export const List = styled.li`
+  padding: 5px 0px;
+  border-bottom: 1px solid rgb(224, 224, 224);
+  cursor: pointer;
+  transition: background-color 0.5s ease 0s;
+`;
+
+export const Ul = styled.ul`
+@media (max-width: 1279px) {
+  margin-left: 50px;
+}
 `;

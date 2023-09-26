@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Section = styled.div`
-  display: ${p => (p.burgerActive ? 'block' : 'none')};
+  display: ${p => (p.burgeractive ? 'block' : 'none')};
   position: fixed;
   z-index: 2;
   left: 0;

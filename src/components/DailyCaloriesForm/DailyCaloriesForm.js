@@ -224,7 +224,7 @@ export const DailyCaloriesForm = () => {
           </Column>
         </ColumnWrap>
 
-        <ButtonWrap display="flex" flexDirection="column" alignItems="center">
+        <ButtonWrap>
           <ButtonSubmit type="submit" disabled={!isValid}>
             Comienza a perder peso
           </ButtonSubmit>

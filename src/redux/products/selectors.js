@@ -1,2 +1,2 @@
 export const selectProductsList = state => state.productList.productsAllows;
-export const sideBarInfoSelectors = state => state.productList.sideBarInfo;
+export const selectConsumeProducts = state => state.productList.consumeDate;
