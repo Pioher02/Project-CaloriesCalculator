@@ -9,7 +9,7 @@ import { UserInfoContainer, UserName, Button } from './UserInfo.styled';
 
 import { Box } from 'components/Box';
 
-export const UserInfo = ({ burgerActive }) => {
+export const UserInfo = ({ burgeractive }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isAcceptModalOpen, setIsAcceptModalopen] = useState(false);
@@ -36,7 +36,7 @@ export const UserInfo = ({ burgerActive }) => {
   const location = useLocation();
 
   return (
-    <UserInfoContainer burger={burgerActive} location={location.pathname}>
+    <UserInfoContainer burger={burgeractive} location={location.pathname}>
       <Box display="flex" ml="auto">
         <UserName>{userName}</UserName>
         <Button type="button" onClick={() => openAcceptModal()}>

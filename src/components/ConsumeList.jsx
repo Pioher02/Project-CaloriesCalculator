@@ -38,7 +38,7 @@ const ConsumeList = ({ consumes }) => {
         <tbody>
           {consumes.map(consume => {
             return (
-              <tr>
+              <tr key={consume.productConsume}>
                 <FirstRow>{consume.productConsume}</FirstRow> <Row>{consume.grams} g</Row>
                 <Row>{consume.calories} kcal</Row>
                 <td>

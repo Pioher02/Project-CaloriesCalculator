@@ -16,7 +16,7 @@ export const NavigationHeader = ({ isloggedin }) => {
     <>
       {isLoading && <Loader />} {/* Mostrar el spinner cuando isLoading sea verdadero */}
       <HeaderNavigationWrapper
-        isloggedin={isloggedin}
+        isloggedin={isloggedin.toString()}
         location={location.pathname}
       >
         {isloggedin ? (

@@ -8,7 +8,7 @@ export const NavigationBurgerMenu = ({ burgerState, burgerClose }) => {
   // const selectedDate = useSelector(getSelectedDate);
 
   return (
-    <Section burgerActive={burgerState}>
+    <Section burgeractive={burgerState}>
       <Wrapper>
         <Link to="/diary" onClick={burgerClose}>
           DIARIO

@@ -13,17 +13,17 @@ import { NavigationBurgerMenu } from '../../components/Navigation/NavigationBurg
 
 export const Header = () => {
   const isloggedin = useSelector(selectIsLoggedIn);
-  const [burgerActive, setBurgerActive] = useState(false);
+  const [burgeractive, setBurgeractive] = useState(false);
 
   const bodyEl = document.body;
 
   const burgerOpen = () => {
-    setBurgerActive(true);
+    setBurgeractive(true);
     bodyEl.style.overflow = 'hidden';
   };
 
   const burgerClose = () => {
-    setBurgerActive(false);
+    setBurgeractive(false);
     bodyEl.style.overflow = 'unset';
   };
 
@@ -37,7 +37,7 @@ export const Header = () => {
           <>
             <NavigationHeader isloggedin={isloggedin} />
             <UserInfo />
-            {burgerActive ? (
+            {burgeractive ? (
               <CrossIconStyled onClick={burgerClose} />
             ) : (
               <BurgerIconStyled onClick={burgerOpen} />
@@ -47,7 +47,7 @@ export const Header = () => {
       </HeaderStyled>
 
       <NavigationBurgerMenu
-        burgerState={burgerActive}
+        burgerState={burgeractive ? burgeractive : undefined}
         burgerClose={burgerClose}
       />
     </>
