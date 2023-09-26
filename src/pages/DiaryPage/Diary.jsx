@@ -38,7 +38,6 @@ import { selectToken } from 'redux/auth/selectors';
 
 const Diary = () => {
   const dispatch = useDispatch();
-  const consumes = useSelector(state => state.diary.consume);
   const registerDate = useSelector(getSelectedDate);
   const consumeProducts = useSelector(selectConsumeProducts);
   let token = useSelector(selectToken);
@@ -127,11 +126,12 @@ const Diary = () => {
     );
   };
 
-  // console.log(consumeProducts);
+ 
 
   return (
     <>
       <WrapPage>
+      <div>
         <Section>
           <DisplayDate>{registerDate}</DisplayDate>
           <Calendar>
@@ -198,12 +198,13 @@ const Diary = () => {
             ''
           )}
         </Form>
-
+        <ConsumeList consumes={consumeProducts.products} />
+        </div>
         <WrapSideBar>
           <SideBar />
         </WrapSideBar>
       </WrapPage>
-      <ConsumeList consumes={consumes} />
+      
     </>
   );
 };

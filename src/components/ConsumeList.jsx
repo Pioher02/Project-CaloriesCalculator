@@ -1,18 +1,39 @@
 import styled from 'styled-components';
 
-const NoProducts = styled.div`
-  margin: 50px 15px 0px;
+const Text = styled.p`
+  margin-top: 50px;
+//   @media (max-width: 1279px) {
+//   top: 400px;
+//   left: 60px;
+// }
+
+// @media (max-width: 767px) {
+//   top: 380px;
+// }
 `;
 
-const ConsumeList = ({ consumes }) => {
-  // primero hacer un .filter con el día y con eso hacer la validación del if
 
+const ConsumeList = ({ consumes }) => {
   if (consumes.length === 0) {
-    return (
-      <NoProducts> No hay productos en el diario para este día </NoProducts>
-    );
+    return <Text>No hay productos en el diario para este día</Text>;
   } else {
-    return <div> tabla de productos con la validación del día </div>;
+    return (
+      <table>
+        <tbody>
+          {consumes.map(consume => {
+            return (
+              <tr>
+                <td>{consume.productConsume}</td> <td>{consume.grams} g</td>
+                <td>{consume.calories} kcal</td>
+                <td>
+                  <button>X</button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    );
   }
 };
 

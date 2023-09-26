@@ -21,8 +21,10 @@ export const SideBar = () => {
   const { countedCalories, notAllowedFoodCategories } =
     useSelector(selectCalculateValue);
 
-  const products = useSelector(selectProductsList);
+  // const products = useSelector(selectProductsList);
 
+  const products = [];
+  
   const totalCalories = products
     .reduce(
       (accumulator, currentValue) =>
