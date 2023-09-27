@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getProductsAllows, keepConsumeProducts } from './operations';
+import {
+  getProductsAllows,
+  keepConsumeProducts,
+  getConsumes,
+} from './operations';
 
 export const productListSlice = createSlice({
   name: 'productList',
@@ -19,6 +23,21 @@ export const productListSlice = createSlice({
     });
     builder.addCase(keepConsumeProducts.fulfilled, (state, action) => {
       state.consumeDate = action.payload.data;
+    });
+    builder.addCase(getConsumes.fulfilled, (state, action) => {
+      const validation = action.payload.data;
+      console.log('esto es validation');
+      console.log(validation);
+      if (validation.length === 0) {
+        console.log('entra al if slice');
+        state.consumeDate.date = null;
+        state.consumeDate.products = [];
+        state.consumeDate.owner = null;
+        console.log('esto es consumeDate');
+        console.log(state.consumeDate);
+      } else {
+        state.consumeDate = action.payload.data[0];
+      }
     });
     //   builder.addCase(fetchsideBarInfo.fulfilled, (state, action) => {
     //     state.sideBarInfo = action.payload;

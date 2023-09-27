@@ -41,6 +41,7 @@ export const keepConsumeProducts = createAsyncThunk(
 export const getConsumes = createAsyncThunk(
   'diary/dayinfo',
   async (credentials, { rejectWithValue }) => {
+    
     const token = credentials.token;
     const dateConsume = credentials.registerDate;
     try {

@@ -36,7 +36,7 @@ import {
 } from 'pages/CalculatorPage/CalculatorPage.styled';
 
 import { setSelectedDate } from 'redux/date/slice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { selectCalculateValue } from 'redux/calculate/selectors';
 import { addProducts } from 'redux/products/slice';
 import { selectToken } from 'redux/auth/selectors';
@@ -52,6 +52,12 @@ const Diary = () => {
 
   const userData = useSelector(selectCalculateValue);
   const bloodType = userData.formData.bloodType;
+
+  useEffect(() => {
+    dispatch(
+      getConsumes({ registerDate, token }) //obtiene los consumos de la BD
+    );
+  }, [dispatch, registerDate, token]);
 
   //Obtiene los productos permitidos
   if (bloodType !== bloodTypeRecent) {
@@ -128,13 +134,6 @@ const Diary = () => {
     );
   };
 
-  //Obtiene los consumos del día
-  if (registerDate !== currentday) {
-    dispatch(
-      getConsumes({ registerDate, token }) //obtiene los consumos de la BD
-    );
-  }
-
   return (
     <>
       <WrapPage>
@@ -178,7 +177,6 @@ const Diary = () => {
             <Button type="submit" disabled={registerDate !== currentday}>
               +
             </Button>
-            
           </Form>
           {showList && productName ? (
             <Ul>
