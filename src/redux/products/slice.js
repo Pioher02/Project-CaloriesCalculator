@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import {
-  getProductsAllows,
-} from './operations';
+import { getProductsAllows, keepConsumeProducts } from './operations';
 
 export const productListSlice = createSlice({
   name: 'productList',
@@ -19,36 +17,37 @@ export const productListSlice = createSlice({
     builder.addCase(getProductsAllows.fulfilled, (state, action) => {
       state.productsAllows = action.payload.data;
     });
-    builder.addCase(getProductsAllows.rejected, (state, action) => {
-      // state.productsDiary = [];
+    builder.addCase(keepConsumeProducts.fulfilled, (state, action) => {
+      state.consumeDate = action.payload.data;
     });
-  //   builder.addCase(fetchsideBarInfo.fulfilled, (state, action) => {
-  //     state.sideBarInfo = action.payload;
-  //   });
-  //   builder.addCase(fetchsideBarInfo.rejected, (state, action) => {
-  //     // state.sideBarInfo = action.payload;
-  //   });
-  //   builder.addCase(postSideBarInfo.fulfilled, (state, action) => {
-  //     state.sideBarInfo = action.payload;
-  //   });
-  //   builder.addCase(postSideBarInfo.rejected, (state, action) => {
-  //     // state.sideBarInfo = action.payload;
-  //   });
-  //   builder.addCase(removeDiaryListItem.fulfilled, (state, action) => {
-  //     const idx = state.productsDiary.findIndex(product => {
-  //       return product._id === action.payload.id;
-  //     });
+    //   builder.addCase(fetchsideBarInfo.fulfilled, (state, action) => {
+    //     state.sideBarInfo = action.payload;
+    //   });
+    //   builder.addCase(fetchsideBarInfo.rejected, (state, action) => {
+    //     // state.sideBarInfo = action.payload;
+    //   });
+    //   builder.addCase(postSideBarInfo.fulfilled, (state, action) => {
+    //     state.sideBarInfo = action.payload;
+    //   });
+    //   builder.addCase(postSideBarInfo.rejected, (state, action) => {
+    //     // state.sideBarInfo = action.payload;
+    //   });
+    //   builder.addCase(removeDiaryListItem.fulfilled, (state, action) => {
+    //     const idx = state.productsDiary.findIndex(product => {
+    //       return product._id === action.payload.id;
+    //     });
 
-  //     state.productsDiary.splice(idx, 1);
-  //   });
-  //   builder.addCase(removeDiaryListItem.rejected, (state, action) => {
-  //     return state;
-  //   });
-  //   builder.addCase(addDiaryListItem.fulfilled, (state, action) => {
-  //     state.productsDiary.unshift(action.payload);
-  //   });
+    //     state.productsDiary.splice(idx, 1);
+    //   });
+    //   builder.addCase(removeDiaryListItem.rejected, (state, action) => {
+    //     return state;
+    //   });
+    //   builder.addCase(addDiaryListItem.fulfilled, (state, action) => {
+    //     state.productsDiary.unshift(action.payload);
+    //   });
   },
 });
 
-export const { addProducts, removeItem, getList, postInfo } = productListSlice.actions;
+export const { addProducts, removeItem, getList, postInfo } =
+  productListSlice.actions;
 export const productListReducer = productListSlice.reducer;
