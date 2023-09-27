@@ -30,7 +30,7 @@ export const keepConsumeProducts = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(result);
+
       return result.data;
     } catch (error) {
       return rejectWithValue(error);
@@ -38,19 +38,24 @@ export const keepConsumeProducts = createAsyncThunk(
   }
 );
 
-export const fetchsideBarInfo = createAsyncThunk(
+export const getConsumes = createAsyncThunk(
   'diary/dayinfo',
-  async (_, { rejectWithValue }) => {
+  async (credentials, { rejectWithValue }) => {
+    
+    const token = credentials.token;
+    const dateConsume = credentials.registerDate;
     try {
-      const result = await axios.get('/diary/dayinfo');
+      const result = await axios.get(`/diary/${dateConsume}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return result.data;
     } catch (error) {
       return rejectWithValue(error);
     }
   }
 );
-
-
 
 export const removeDiaryListItem = createAsyncThunk(
   'products/removeItem',
@@ -59,18 +64,6 @@ export const removeDiaryListItem = createAsyncThunk(
       const { data } = await axios.delete(`/diary/${id}`);
 
       return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
-export const addDiaryListItem = createAsyncThunk(
-  'products/addItem',
-  async (product, { rejectWithValue }) => {
-    try {
-      const result = await axios.post(`/diary/${product.date}`, { ...product });
-      return result.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }

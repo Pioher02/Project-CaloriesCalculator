@@ -7,7 +7,11 @@ import 'react-datetime/css/react-datetime.css';
 import { useDispatch, useSelector } from 'react-redux';
 import calendar from '../../images/calendar.svg';
 import { getSelectedDate } from 'redux/date/selectors';
-import { getProductsAllows, keepConsumeProducts } from 'redux/products/operations';
+import {
+  getProductsAllows,
+  keepConsumeProducts,
+  getConsumes,
+} from 'redux/products/operations';
 import {
   selectConsumeProducts,
   selectProductsList,
@@ -22,7 +26,8 @@ import {
   Button,
   Calendar,
   Image,
-  List, Ul,
+  List,
+  Ul,
 } from './DiaryPage.styled';
 
 import {
@@ -31,7 +36,7 @@ import {
 } from 'pages/CalculatorPage/CalculatorPage.styled';
 
 import { setSelectedDate } from 'redux/date/slice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { selectCalculateValue } from 'redux/calculate/selectors';
 import { addProducts } from 'redux/products/slice';
 import { selectToken } from 'redux/auth/selectors';
@@ -47,6 +52,12 @@ const Diary = () => {
 
   const userData = useSelector(selectCalculateValue);
   const bloodType = userData.formData.bloodType;
+
+  useEffect(() => {
+    dispatch(
+      getConsumes({ registerDate, token }) //obtiene los consumos de la BD
+    );
+  }, [dispatch, registerDate, token]);
 
   //Obtiene los productos permitidos
   if (bloodType !== bloodTypeRecent) {
@@ -110,70 +121,64 @@ const Diary = () => {
     setProductName('');
   };
 
-  //Guarda la información
+  //Guarda los consumos del día
   const keepConsume = consumeList => {
-
     const dataForDispatch = {
       date: registerDate,
       products: [...consumeProducts.products, consumeList],
-    }
-    dispatch(
-      addProducts(dataForDispatch)
-    ); // Guarda en local
+    };
+    dispatch(addProducts(dataForDispatch)); // Guarda en local
 
     dispatch(
       keepConsumeProducts({ dataForDispatch, token }) //Guarda en BD
     );
   };
 
- 
-
   return (
     <>
       <WrapPage>
-      <div style={{marginBottom: "100px"}}>
-        <Section>
-          <DisplayDate>{registerDate}</DisplayDate>
-          <Calendar>
-            <Image src={calendar} alt="calendar" />
-            <Datetime
-              className="rdt"
-              inputProps={{ className: 'inputtime' }}
-              isValidDate={valid}
-              closeOnSelect
-              dateFormat="DD-MM-YYYY"
-              timeFormat={false}
-              value={registerDate}
-              onChange={changeDate}
-            />
-          </Calendar>
-        </Section>
+        <div style={{ marginBottom: '100px' }}>
+          <Section>
+            <DisplayDate>{registerDate}</DisplayDate>
+            <Calendar>
+              <Image src={calendar} alt="calendar" />
+              <Datetime
+                className="rdt"
+                inputProps={{ className: 'inputtime' }}
+                isValidDate={valid}
+                closeOnSelect
+                dateFormat="DD-MM-YYYY"
+                timeFormat={false}
+                value={registerDate}
+                onChange={changeDate}
+              />
+            </Calendar>
+          </Section>
 
-        <Form onSubmit={saveProduct}>
-          <ProductInput
-            name="product"
-            id="products"
-            placeholder="Ingresa el nombre del producto"
-            onChange={ev => {
-              setProductName(ev.target.value);
-              setShowList(true);
-            }}
-            value={productName}
-            required
-          />
-          <GramsInput
-            type="number"
-            id="grams"
-            name="grams"
-            placeholder="Gramos"
-            required
-          />
-          <Button type="submit" disabled={registerDate !== currentday}>
-            +
-          </Button>
-       
-        </Form>
-        {showList && productName ? (
+          <Form onSubmit={saveProduct}>
+            <ProductInput
+              name="product"
+              id="products"
+              placeholder="Ingresa el nombre del producto"
+              onChange={ev => {
+                setProductName(ev.target.value);
+                setShowList(true);
+              }}
+              value={productName}
+              required
+            />
+            <GramsInput
+              type="number"
+              id="grams"
+              name="grams"
+              placeholder="Gramos"
+              required
+            />
+            <Button type="submit" disabled={registerDate !== currentday}>
+              +
+            </Button>
+          </Form>
+          {showList && productName ? (
             <Ul>
               {productsList
                 .filter(product =>
@@ -198,13 +203,12 @@ const Diary = () => {
           ) : (
             ''
           )}
-        <ConsumeList consumes={consumeProducts.products} />
+          <ConsumeList consumes={consumeProducts.products} />
         </div>
         <WrapSideBar>
           <SideBar />
         </WrapSideBar>
       </WrapPage>
-      
     </>
   );
 };
