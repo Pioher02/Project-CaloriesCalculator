@@ -4,7 +4,7 @@ export const initialDate = moment(new Date()).format('DD-MM-YYYY');
 
 export const bloodTypes = [1, 2, 3, 4]; //usado
 
-export const baseURL = process.env.NODE_ENV === "development" ? "http://localhost:3001/api" : "https://backend-calories-calculator-65gwse5uu-pioher02s-projects.vercel.app"
+export const baseURL = process.env.NODE_ENV === "development" ? "http://localhost:3001/api" : "https://backend-calories-calculator-5axrkmoam-pioher02s-projects.vercel.app"
 
 // https://rad-vacherin-853b41.netlify.app  
 
