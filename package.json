@@ -1,8 +1,8 @@
 {
-  "name": "Project-CaloriesCalculator",
+  "name": "Project-CaloriesCalculator-1",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Pioher02.github.io/Project-CaloriesCalculator/",
+  "homepage": "https://angelique15.github.io/Project-CaloriesCalculator-1/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.3",
