@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { baseURL } from 'helpers/constants';
 
-axios.defaults.baseURL = 'http://localhost:3001/api';
+axios.defaults.baseURL = baseURL;
 
 //Guarda en la base de datos la información de la calculadora
 export const calculation = createAsyncThunk(

@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { baseURL } from 'helpers/constants';
 
-axios.defaults.baseURL = 'http://localhost:3001/api';
+axios.defaults.baseURL = baseURL;
 axios.defaults.withCredentials = true;
 
 //Obtiene productos permitidos
@@ -38,12 +39,13 @@ export const keepConsumeProducts = createAsyncThunk(
   }
 );
 
+//Obtiene productos consumidos
 export const getConsumes = createAsyncThunk(
   'diary/dayinfo',
   async (credentials, { rejectWithValue }) => {
-    
     const token = credentials.token;
     const dateConsume = credentials.registerDate;
+
     try {
       const result = await axios.get(`/diary/${dateConsume}`, {
         headers: {
@@ -57,13 +59,23 @@ export const getConsumes = createAsyncThunk(
   }
 );
 
-export const removeDiaryListItem = createAsyncThunk(
+//Borra productos consumidos
+export const deleteConsume = createAsyncThunk(
   'products/removeItem',
-  async (id, { rejectWithValue }) => {
-    try {
-      const { data } = await axios.delete(`/diary/${id}`);
+  async (credentials, { rejectWithValue }) => {
+    const token = credentials.token;
+    const date = credentials.registerDate;
+    const consumeInfo = { index: credentials.index };
+    console.log(consumeInfo);
 
-      return data;
+    try {
+      const result = await axios.put(`/diary/${date}`, consumeInfo, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return result.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }
