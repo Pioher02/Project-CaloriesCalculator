@@ -6,6 +6,7 @@ import { ContainerRegister, Title } from './registerPage.styled';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Loader from 'components/Loader/spinnerApp';
+import { baseURL } from 'helpers/constants';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
@@ -55,7 +56,7 @@ const RegisterPage = () => {
     if (isValid) {
       try {
         // Realiza una solicitud POST al servidor para registrar al usuario
-        const response = await axios.post('http://localhost:3001/api/users/signup', {
+        const response = await axios.post(`${baseURL}/users/signup`, {
           username,
           email,
           password,

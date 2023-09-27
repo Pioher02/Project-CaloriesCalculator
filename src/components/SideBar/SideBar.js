@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { selectConsumeProducts } from 'redux/products/selectors';
 import { selectCalculateValue } from 'redux/calculate/selectors';
 import { getSelectedDate } from 'redux/date/selectors';
-// import { Loader } from 'components/Loader/Loader';
+import { initialDate } from 'helpers/constants';
 
 import {
   SideBarContainer,
@@ -25,10 +25,9 @@ export const SideBar = () => {
   const products = productsList.products;
   const consumeCalories = products.map(product => product.calories);
 
-   const totalCalories = consumeCalories
+  const totalCalories = consumeCalories
     .reduce(
-      (accumulator, currentValue) =>
-        accumulator + Number(currentValue),
+      (accumulator, currentValue) => accumulator + Number(currentValue),
       0
     )
     .toFixed(2);
@@ -40,9 +39,11 @@ export const SideBar = () => {
   return (
     <Box>
       <SideBarContainer>
-        {/* {isLoading ? <Loader /> : null} */}
         <Title>
-          Resumen para el <span>{selectedDate}</span>
+          Resumen para el{' '}
+          <span>
+            {selectedDate ? selectedDate : initialDate.split('-').join('.')}
+          </span>
         </Title>
         <TextBox>
           <ul>

@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { baseURL } from 'helpers/constants';
 
 // Configuración de la URL base para las solicitudes Axios
-axios.defaults.baseURL = 'http://localhost:3001/api';
+axios.defaults.baseURL = baseURL;
 
 // Función para configurar el encabezado de autorización con el token
 const setAuthHeader = (token) => {

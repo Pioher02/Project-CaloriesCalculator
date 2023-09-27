@@ -6,6 +6,7 @@ import { ContainerLogin } from './loginPage.styled';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Loader from 'components/Loader/spinnerApp';
+import { baseURL } from 'helpers/constants';
 
 const LoginPage = () => {
   // Estados para el formulario y mensajes de error
@@ -56,7 +57,7 @@ const LoginPage = () => {
       setIsLoading(true); // Activar el spinner al iniciar sesión
       try {
         const response = await axios.post(
-          'http://localhost:3001/api/users/login',
+          `${baseURL}/users/login`,
           {
             email,
             password,

@@ -42,7 +42,6 @@ export const ProductInput = styled.input`
   border: none;
   border-bottom: 1px solid #e0e0e0;
   padding: 0px 0px 12px;
-  margin-left: 15px;
   text-wrap: wrap;
 `;
 
@@ -68,7 +67,7 @@ export const Button = styled.button`
   color: white;
   font-size: 30px;
   box-shadow: 0px 4px 10px 0px #fc842d;
-  cursor:pointer;
+  cursor: pointer;
 
   &:disabled {
     background-color: #ffb37c;
@@ -89,7 +88,7 @@ export const List = styled.li`
 `;
 
 export const Ul = styled.ul`
-@media (max-width: 1279px) {
-  margin-left: 50px;
-}
+  @media (max-width: 1279px) {
+    margin-left: 50px;
+  }
 `;

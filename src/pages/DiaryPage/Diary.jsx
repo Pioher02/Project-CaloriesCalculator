@@ -1,4 +1,4 @@
-import ConsumeList from '../../components/ConsumeList';
+import ConsumeList from '../../components/UserInfo/ConsumeList/ConsumeList';
 import { SideBar } from 'components/SideBar/SideBar';
 import Datetime from 'react-datetime';
 import moment from 'moment';
@@ -11,6 +11,7 @@ import {
   getProductsAllows,
   keepConsumeProducts,
   getConsumes,
+  deleteConsume,
 } from 'redux/products/operations';
 import {
   selectConsumeProducts,
@@ -134,6 +135,11 @@ const Diary = () => {
     );
   };
 
+  //Borrar consumo
+  const handleDeleteConsume = index => {
+    dispatch(deleteConsume({ index, registerDate, token }));
+  };
+
   return (
     <>
       <WrapPage>
@@ -203,7 +209,10 @@ const Diary = () => {
           ) : (
             ''
           )}
-          <ConsumeList consumes={consumeProducts.products} />
+          <ConsumeList
+            consumes={consumeProducts.products}
+            deleteConsume={handleDeleteConsume}
+          />
         </div>
         <WrapSideBar>
           <SideBar />
