@@ -1,0 +1,113 @@
+import { useSelector } from 'react-redux';
+import { selectConsumeProducts } from 'redux/products/selectors';
+import { selectCalculateValue } from 'redux/calculate/selectors';
+import { getSelectedDate } from 'redux/date/selectors';
+import { initialDate } from 'helpers/constants';
+
+import {
+  SideBarContainer,
+  Box,
+  Title,
+  P,
+  Span,
+  TextBox,
+  Ul,
+  Li,
+} from './SideBar.styled';
+
+export const SideBar = () => {
+  const selectedDate = useSelector(getSelectedDate);
+
+  const { countedCalories, notAllowedFoodCategories } =
+    useSelector(selectCalculateValue);
+
+  const productsList = useSelector(selectConsumeProducts);
+  const products = productsList.products;
+  const consumeCalories = products.map(product => product.calories);
+
+  const totalCalories = consumeCalories
+    .reduce(
+      (accumulator, currentValue) => accumulator + Number(currentValue),
+      0
+    )
+    .toFixed(2);
+  const diffCalories = (Number(countedCalories) - totalCalories).toFixed(2);
+  const percentage = ((totalCalories / Number(countedCalories)) * 100).toFixed(
+    2
+  );
+
+  return (
+    <Box>
+      <SideBarContainer>
+        <Title>
+          Resumen para el{' '}
+          <span>
+            {selectedDate ? selectedDate : initialDate.split('-').join('.')}
+          </span>
+        </Title>
+        <TextBox>
+          <ul>
+            <li>
+              <P>
+                <Span>Quedan</Span>
+              </P>
+            </li>
+            <li>
+              <P>
+                <Span>Сonsumido</Span>
+              </P>
+            </li>
+            <li>
+              <P>
+                <Span>Daily Rate</Span>
+              </P>
+            </li>
+            <li>
+              <P>
+                <Span>n% de lo normal</Span>
+              </P>
+            </li>
+          </ul>
+
+          <Ul>
+            <Li>
+              <P>
+                <Span> {diffCalories} kcal</Span>
+              </P>
+            </Li>
+            <Li>
+              <P>
+                <Span>{totalCalories} кcal</Span>
+              </P>
+            </Li>
+            <Li>
+              <P>
+                <Span>{countedCalories ?? 0} кcal</Span>
+              </P>
+            </Li>
+            <Li>
+              <P>
+                <Span>{isNaN(percentage) ? 0 : percentage} %</Span>
+              </P>
+            </Li>
+          </Ul>
+        </TextBox>
+      </SideBarContainer>
+      <SideBarContainer>
+        <Title>Alimentos no recomendados</Title>
+        <ul>
+          {notAllowedFoodCategories &&
+            notAllowedFoodCategories.slice(0, 4).map(product => {
+              return (
+                <li key={product.title}>
+                  <P>
+                    <span>{product.title}</span>
+                  </P>
+                </li>
+              );
+            })}
+        </ul>
+      </SideBarContainer>
+    </Box>
+  );
+};
