@@ -1,4 +1,4 @@
-export const selectIsLoggedIn = state => state.auth.isLoggedin;
+export const selectIsLoggedIn = state => state.auth.isLoggedin; //usado
 
 export const selectIsRefreshing = state => state.auth.isRefreshing;
 
@@ -9,7 +9,7 @@ export const selectUserName = state => state.auth.user.username;
 export const selectUserBloodType = state => state.auth.user.bloodType;
 
 // Selector para obtener el token de autenticación
-export const selectToken = state => state.auth.token;
+export const selectToken = state => state.auth.token; //usado
 
-// Crea un selector para obtener los alimentos no permitidos del estado de Redux
-export const selectNotAllowedFoods = state => state.food;
+// Crea un selector para obtener los alimentos no permitidos del estado de Redux usado
+export const selectNotAllowedFoods = state => state.food; 

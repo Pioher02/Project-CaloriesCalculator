@@ -4,7 +4,7 @@ import { baseURL } from 'helpers/constants';
 
 axios.defaults.baseURL = baseURL;
 
-//Guarda en la base de datos la información de la calculadora
+//Guarda en la base de datos la información de la calculadora (usado)
 export const calculation = createAsyncThunk(
   'calculate/calories',
   async (credentials, { rejectWithValue }) => {
