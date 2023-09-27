@@ -59,10 +59,15 @@ export const getUserInfo = createAsyncThunk(
 
 export const logOut = createAsyncThunk(
   'auth/logout',
-  async (_, { rejectWithValue }) => {
+  async (token, { rejectWithValue }) => {
     try {
-      await axios.post('/users/logout');
-      token.unset();
+      const res = await axios.post('/users/logout', token, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return res;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -88,15 +93,15 @@ export const refreshUser = createAsyncThunk(
   }
 );
 
-export const refreshToken = createAsyncThunk(
-  'auth/refreshToken',
-  async (credentials, { rejectWithValue }) => {
-    try {
-      const res = await axios.post('/auth/refreshToken', credentials);
-      token.set(res.data.result.token);
-      return res.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
+// export const refreshToken = createAsyncThunk(
+//   'auth/refreshToken',
+//   async (credentials, { rejectWithValue }) => {
+//     try {
+//       const res = await axios.post('/auth/refreshToken', credentials);
+//       token.set(res.data.result.token);
+//       return res.data;
+//     } catch (error) {
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );

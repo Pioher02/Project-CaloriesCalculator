@@ -6,6 +6,7 @@ import { removeCalories } from 'redux/calculate/slice';
 import { selectUserName } from 'redux/auth/selectors';
 import { AcceptModal } from 'components/AcceptModal';
 import { UserInfoContainer, UserName, Button } from './UserInfo.styled';
+import { selectToken } from 'redux/auth/selectors';
 
 import { Box } from 'components/Box';
 
@@ -14,11 +15,12 @@ export const UserInfo = ({ burgeractive }) => {
   const navigate = useNavigate();
   const [isAcceptModalOpen, setIsAcceptModalopen] = useState(false);
   const userName = useSelector(selectUserName);
+  let token = useSelector(selectToken);
 
   const Logout = () => {
     setIsAcceptModalopen(false);
     window.document.body.style.overflow = 'unset';
-    dispatch(logOut());
+    dispatch(logOut(token));
     navigate('/');
     dispatch(removeCalories());
   };
