@@ -15,6 +15,7 @@ export const calculateSlice = createSlice({
     notAllowedFoodCategories: [],
   },
   reducers: {
+    //usado
     addCalories: (state, action) => {
       state.formData = action.payload.data;
       state.countedCalories = action.payload.calorie;
