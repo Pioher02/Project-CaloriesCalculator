@@ -16,36 +16,3 @@ export const store = configureStore({
     food: foodReducer, // Agrega el reducer de alimentos con la clave 'food'
   },
 });
-
-/*VALIDAR EL USO DE PERSIST PARA QUE NO SE CIERRE LA SESIÓN
-
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-
-const authPersistConfig = {
-  key: 'auth',
-  storage,
-  whitelist: ['token'],
-};
-
- auth: persistReducer(authPersistConfig, authReducer),
-
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
-  //devTools: process.env.NODE_ENV === 'development',
-});
-
-export const persistor = persistStore(store);*/

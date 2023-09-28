@@ -1,4 +1,4 @@
-// components/Modal/CustomModal.js
+// components/Modal/CustomModal.js usado
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';

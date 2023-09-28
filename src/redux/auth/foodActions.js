@@ -3,7 +3,7 @@ import { setFoods } from './foodReducer';
 import { baseURL } from 'helpers/constants';
 
 import axios from 'axios';
-// Acción para cargar alimentos según el tipo de sangre
+// Acción para cargar alimentos según el tipo de sangre usado
 export const loadFoodsByBloodType = (userBloodType) => async (dispatch) => {
     try {
         const response = await axios.get(`${baseURL}/not-allowed-foods/${userBloodType}`);
