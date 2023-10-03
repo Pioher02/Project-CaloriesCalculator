@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Project-CaloriesCalculator/static/css/main.b578c191.css",
-    "main.js": "/Project-CaloriesCalculator/static/js/main.b2a75cc9.js",
+    "main.js": "/Project-CaloriesCalculator/static/js/main.fb10afa8.js",
     "static/js/679.75b26f2a.chunk.js": "/Project-CaloriesCalculator/static/js/679.75b26f2a.chunk.js",
     "static/js/622.c73ca946.chunk.js": "/Project-CaloriesCalculator/static/js/622.c73ca946.chunk.js",
     "static/js/723.111e13b0.chunk.js": "/Project-CaloriesCalculator/static/js/723.111e13b0.chunk.js",
@@ -36,7 +36,7 @@
     "static/media/burger-icon.svg": "/Project-CaloriesCalculator/static/media/burger-icon.8cb0c26c6c33ef2d8045ea44c23922b2.svg",
     "static/media/close-cross.svg": "/Project-CaloriesCalculator/static/media/close-cross.a83ac09f155e74bbf1f4e260be5074d7.svg",
     "main.b578c191.css.map": "/Project-CaloriesCalculator/static/css/main.b578c191.css.map",
-    "main.b2a75cc9.js.map": "/Project-CaloriesCalculator/static/js/main.b2a75cc9.js.map",
+    "main.fb10afa8.js.map": "/Project-CaloriesCalculator/static/js/main.fb10afa8.js.map",
     "679.75b26f2a.chunk.js.map": "/Project-CaloriesCalculator/static/js/679.75b26f2a.chunk.js.map",
     "622.c73ca946.chunk.js.map": "/Project-CaloriesCalculator/static/js/622.c73ca946.chunk.js.map",
     "723.111e13b0.chunk.js.map": "/Project-CaloriesCalculator/static/js/723.111e13b0.chunk.js.map",
@@ -46,6 +46,6 @@
   },
   "entrypoints": [
     "static/css/main.b578c191.css",
-    "static/js/main.b2a75cc9.js"
+    "static/js/main.fb10afa8.js"
   ]
 }
